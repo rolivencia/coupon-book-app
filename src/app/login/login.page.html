@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Iniciar Sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-button color="primary" expand="block" (click)="login('facebook')"
+    ><ion-icon name="logo-facebook"></ion-icon> Iniciar con Facebook</ion-button
+  >
+  <ion-button color="danger" expand="block" (click)="login('google')"
+    ><ion-icon name="logo-google"></ion-icon> Iniciar con Google</ion-button
+  >
+  <ion-button color="dark" expand="block" (click)="login('mail')"
+    ><ion-icon name="mail"></ion-icon> Iniciar con eMail</ion-button
+  >
+</ion-content>

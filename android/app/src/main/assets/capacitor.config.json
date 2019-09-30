@@ -1,0 +1,7 @@
+{
+  "appId": "com.turingstudio.brugge",
+  "appName": "Brügge",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}

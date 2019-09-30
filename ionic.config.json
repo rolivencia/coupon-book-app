@@ -1,0 +1,7 @@
+{
+  "name": "brugge-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
