@@ -11,6 +11,11 @@
         >
       </ion-card-header>
       <ion-card-content> {{coupon.description}} </ion-card-content>
+      <qrcode
+              [qrdata]="coupon.code"
+              [size]="96"
+              [level]="'M'"
+      ></qrcode>
     </ion-card>
   </ion-content>
 </ion-content>

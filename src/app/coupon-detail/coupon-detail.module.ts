@@ -8,6 +8,7 @@ import { IonicModule } from "@ionic/angular";
 import { CouponDetailPage } from "./coupon-detail.page";
 import { CouponDetailResolverService } from "@app/coupon-detail/coupon-detail-resolver.service";
 import { HeaderModule } from "@app/_components/header/header.module";
+import { QRCodeModule } from "angularx-qrcode";
 
 const routes: Routes = [
   {
@@ -25,7 +26,8 @@ const routes: Routes = [
     FormsModule,
     HeaderModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    QRCodeModule
   ],
   declarations: [CouponDetailPage]
 })
