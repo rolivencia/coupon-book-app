@@ -1,5 +1,23 @@
 <app-header [title]="'Cuponera'"></app-header>
 
 <ion-content>
+    <ion-list>
+        <ion-list-header>
+            Cupones Vigentes
+        </ion-list-header>
 
+        <ng-container *ngFor="let coupon of couponService.coupons">
+            <ion-item (click)="viewDetail(coupon)">
+                <ion-avatar slot="start">
+                    <img [src]="coupon.imageUrl">
+                </ion-avatar>
+                <ion-label>
+                    <h1>{{coupon.title}}</h1>
+                    <h2>Hasta {{coupon.endsAt.format("DD/MM/YYYY hh:mm")}}</h2>
+                    <p>{{coupon.description}}</p>
+                </ion-label>
+            </ion-item>
+        </ng-container>
+
+    </ion-list>
 </ion-content>

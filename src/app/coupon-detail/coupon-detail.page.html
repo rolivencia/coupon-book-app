@@ -1,0 +1,16 @@
+<app-header [title]="'Ver Cupón'"></app-header>
+
+<ion-content>
+  <ion-content fullscreen>
+    <ion-card *ngIf="coupon">
+      <img [src]="coupon.imageUrl" />
+      <ion-card-header>
+        <ion-card-title>{{coupon.title}}</ion-card-title>
+        <ion-card-subtitle
+          >{{coupon.endsAt.format("DD/MM/YYYY HH:mm")}}</ion-card-subtitle
+        >
+      </ion-card-header>
+      <ion-card-content> {{coupon.description}} </ion-card-content>
+    </ion-card>
+  </ion-content>
+</ion-content>
