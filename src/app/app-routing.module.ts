@@ -28,6 +28,11 @@ const routes: Routes = [
       import("./coupon-detail/coupon-detail.module").then(
         m => m.CouponDetailPageModule
       )
+  },
+  {
+    path: "register",
+    loadChildren: () =>
+      import("./register/register.module").then(m => m.RegisterPageModule)
   }
 ];
 

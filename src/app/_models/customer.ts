@@ -4,6 +4,7 @@ export class Customer {
   lastName: string;
   email: string;
   uidFirebase: string;
+  token?: string;
 
   constructor(){}
 }

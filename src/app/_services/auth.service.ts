@@ -6,28 +6,43 @@ import { Facebook } from "@ionic-native/facebook/ngx";
 import { BehaviorSubject, Observable } from "rxjs";
 import firebase from "@firebase/app";
 import "@firebase/auth";
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpErrorResponse
-} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { environment } from "@environments/environment";
 import { Customer } from "@app/_models/customer";
+import { GooglePlus } from "@ionic-native/google-plus/ngx";
+import { LoadingService } from "@app/_services/loading.service";
+import { AlertService } from "@app/_services/alert.service";
+import { first } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
+  private customerSubject: BehaviorSubject<Customer>;
+  public customer: Observable<Customer>;
+
   public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
 
   constructor(
+    private alertService: AlertService,
     private platform: Platform,
     private zone: NgZone,
     private facebook: Facebook,
-    public httpClient: HttpClient
-  ) {}
+    public httpClient: HttpClient,
+    private google: GooglePlus,
+    private loadingService: LoadingService
+  ) {
+    this.customerSubject = new BehaviorSubject<Customer>(
+      JSON.parse(localStorage.getItem("customer"))
+    );
+    this.customer = this.customerSubject.asObservable();
+  }
+
+  public get currentCustomer(): Customer {
+    return this.customerSubject.value;
+  }
 
   init(): void {
     // Your web app's Firebase configuration
@@ -54,19 +69,15 @@ export class AuthService {
   }
 
   facebookLogin(): void {
-    if (this.platform.is("capacitor")) {
-      this.nativeFacebookAuth();
-    } else {
-      this.browserFacebookAuth();
-    }
+    // if (this.platform.is("capacitor")) {
+    //   this.nativeFacebookAuth();
+    // } else {
+    this.browserFacebookAuth();
+    // }
   }
 
   googleLogin(): void {
-    if (this.platform.is("capacitor")) {
-      // this.nativeGoogleAuth();
-    } else {
-      // this.browserGoogleAuth();
-    }
+    this.googleAuth();
   }
   mailLogin(): void {
     // this.mailAuth();
@@ -76,17 +87,24 @@ export class AuthService {
     if (this.platform.is("capacitor")) {
       try {
         await this.facebook.logout(); // Unauth with Facebook
+        await this.google.logout(); // Unauth with Google
         await firebase.auth().signOut(); // Unauth with Firebase
       } catch (err) {
+        this.loadingService.loading.dismiss();
         console.log(err);
       }
     } else {
       try {
         await firebase.auth().signOut();
       } catch (err) {
-        console.log(err);
+        this.loadingService.loading.dismiss();
+        console.error(err);
       }
     }
+
+    // remove user from local storage to log user out
+    localStorage.removeItem("customer");
+    this.customerSubject.next(null);
   }
 
   async nativeFacebookAuth(): Promise<void> {
@@ -138,9 +156,41 @@ export class AuthService {
         email: result.additionalUserInfo.profile.email
       };
       const sqlUser = await this.create(customer).toPromise();
-      console.log(result);
+      localStorage.setItem("customer", JSON.stringify(sqlUser));
+      this.customerSubject.next(sqlUser);
     } catch (err) {
-      console.log(err);
+      this.loadingService.loading.dismiss();
+      if (err.code === "auth/account-exists-with-different-credential") {
+        this.alertService.show(
+          "¡Error!",
+          "¡Vaya! Tu email ya está asociado a otra plataforma.\n\n Intentá ingresar con una de las otras dos opciones."
+        );
+      } else {
+        console.error(err);
+      }
+    }
+  }
+
+  async googleAuth() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+
+    try {
+      const result: any = await firebase.auth().signInWithPopup(provider);
+      const customer: Customer = {
+        firstName: result.additionalUserInfo.profile.given_name,
+        lastName: result.additionalUserInfo.profile.family_name,
+        uidFirebase: result.additionalUserInfo.profile.id,
+        email: result.additionalUserInfo.profile.email
+      };
+      const sqlUser = await this.create(customer)
+        .pipe(first())
+        .subscribe(response => {
+          localStorage.setItem("customer", JSON.stringify(response));
+          this.customerSubject.next(response);
+          console.log(response);
+        });
+    } catch (err) {
+      console.error(err);
     }
   }
 

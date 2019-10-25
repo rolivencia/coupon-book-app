@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
 })
 export class CouponsPage implements OnInit {
 
-  constructor(private couponService: CouponService, private router: Router) {}
+  constructor(public couponService: CouponService, private router: Router) {}
 
   ngOnInit() {
     this.couponService

@@ -1,5 +1,6 @@
-import {Component, Input, OnInit} from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { MenuController } from "@ionic/angular";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-header",
@@ -7,10 +8,9 @@ import { MenuController } from "@ionic/angular";
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit {
+  @Input() title: string = "Brügge";
 
-  @Input() title: string = 'Brügge';
-
-  constructor(private menu: MenuController) {}
+  constructor(private menu: MenuController, private router: Router) {}
 
   openFirst() {
     this.menu.enable(true, "first");
@@ -27,4 +27,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  toProfile() {
+    this.router.navigate(["profile"]);
+  }
 }

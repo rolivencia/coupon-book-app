@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { NavController, LoadingController } from "@ionic/angular";
-import {AuthService} from '../_services/auth.service';
+import { AuthService } from "../_services/auth.service";
+import { LoadingService } from "@app/_services/loading.service";
 
 @Component({
   selector: "app-login",
@@ -8,28 +9,31 @@ import {AuthService} from '../_services/auth.service';
   styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
-  private loading;
-
   constructor(
     public authService: AuthService,
     private navCtrl: NavController,
-    private loadingCtrl: LoadingController
+    private loadingService: LoadingService
   ) {}
 
   async ngOnInit() {
-    await this.showLoading();
+    await this.loadingService.showLoading();
 
-    this.authService.loggedIn.subscribe(status => {
-      this.loading.dismiss();
+    this.authService.loggedIn.subscribe(
+      status => {
+        this.loadingService.loading.dismiss();
 
-      if (status) {
-        this.navCtrl.navigateForward("/home");
+        if (status) {
+          this.navCtrl.navigateForward("/home");
+        }
+      },
+      error => {
+        this.loadingService.loading.dismiss();
       }
-    });
+    );
   }
 
   async login(platform: string = "facebook") {
-    await this.showLoading();
+    await this.loadingService.showLoading();
     switch (platform) {
       case "facebook":
         this.authService.facebookLogin();
@@ -40,13 +44,5 @@ export class LoginPage implements OnInit {
       default:
         break;
     }
-  }
-
-  async showLoading() {
-    this.loading = await this.loadingCtrl.create({
-      message: "Iniciando sesión..."
-    });
-
-    this.loading.present();
   }
 }
