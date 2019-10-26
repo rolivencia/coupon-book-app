@@ -7,7 +7,7 @@
     <ion-card *ngIf="coupon">
 
       <qrcode *ngIf="view === 'redeem'"
-              [qrdata]="coupon.code"
+              [qrdata]="couponCustomerCode"
               [size]="256"
               [level]="'M'"
       ></qrcode>
