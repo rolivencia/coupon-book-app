@@ -3,21 +3,24 @@
 <ion-content>
     <ion-list>
         <ion-list-header>
-            Cupones Vigentes
+            Cupones disponibles
         </ion-list-header>
 
-        <ng-container *ngFor="let coupon of couponService.coupons">
-            <ion-item (click)="viewDetail(coupon)">
-                <ion-avatar slot="start">
-                    <img [src]="coupon.imageUrl">
-                </ion-avatar>
-                <ion-label>
-                    <h1>{{coupon.title}}</h1>
-                    <h2>Hasta {{coupon.endsAt.format("DD/MM/YYYY hh:mm")}}</h2>
-                    <p>{{coupon.description}}</p>
-                </ion-label>
-            </ion-item>
-        </ng-container>
+        <ion-item (click)="viewDetail(coupon)" *ngFor="let coupon of couponService.coupons">
+            <ion-thumbnail slot="start">
+                <img [src]="coupon.imageUrl">
+            </ion-thumbnail>
+            <ion-label>
+                <h4>Hasta {{coupon.endsAt.format("DD/MM/YYYY hh:mm")}}</h4>
+                <h1>{{coupon.title}}</h1>
+                <p>{{coupon.description}}</p>
+            </ion-label>
+        </ion-item>
 
+    </ion-list>
+    <ion-list>
+        <ion-list-header>
+            Tus últimos canjes
+        </ion-list-header>
     </ion-list>
 </ion-content>

@@ -3,6 +3,7 @@ export class Customer {
   firstName: string;
   lastName: string;
   email: string;
+  imageUrl: string;
   uidFirebase: string;
   token?: string;
 

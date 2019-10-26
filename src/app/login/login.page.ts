@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NavController, LoadingController } from "@ionic/angular";
 import { AuthService } from "../_services/auth.service";
 import { LoadingService } from "@app/_services/loading.service";
+import {ThemeService} from "@app/_services/theme.service";
 
 @Component({
   selector: "app-login",
@@ -9,10 +10,14 @@ import { LoadingService } from "@app/_services/loading.service";
   styleUrls: ["./login.page.scss"]
 })
 export class LoginPage implements OnInit {
+  public logo: string = "logo-white";
+  public backgroundColor: string = "white";
+
   constructor(
     public authService: AuthService,
     private navCtrl: NavController,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private themeService: ThemeService
   ) {}
 
   async ngOnInit() {
@@ -30,6 +35,9 @@ export class LoginPage implements OnInit {
         this.loadingService.loading.dismiss();
       }
     );
+
+    this.logo = this.themeService.currentTheme.logo;
+    this.backgroundColor = this.themeService.currentTheme.color;
   }
 
   async login(platform: string = "facebook") {
@@ -45,4 +53,6 @@ export class LoginPage implements OnInit {
         break;
     }
   }
+
+
 }

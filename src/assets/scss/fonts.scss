@@ -1,0 +1,23 @@
+@font-face {
+  font-family: "Gobold Bold";
+  src: url(assets/fonts/gobold-bold.otf);
+}
+
+@font-face {
+  font-family: 'Open Sans Condensed', sans-serif;
+  src: url(assets/fonts/open-sans-condensed-light.ttf);
+}
+
+h1, h2, h3, ion-card-title{
+  font-family: "Gobold Bold"
+}
+
+p {
+  font-family: "Open Sans Condensed"
+}
+
+ion-content{
+  background-color: #cccccc;
+  //opacity: 0.5;
+  --background: url("/assets/img/background.jpg") 0/100% no-repeat
+}

@@ -1,0 +1,19 @@
+ion-content{
+  .container{
+    height: 100%;
+    ion-img{
+      display: inline;
+    }
+  }
+}
+
+ion-footer{
+  ion-button{
+    ion-label{
+      font-family: 'Open Sans Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-left: 10px;
+    }
+  }
+}

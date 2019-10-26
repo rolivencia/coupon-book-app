@@ -130,6 +130,7 @@ export class AuthService {
               .catch(error => {
                 console.log(error);
               });
+            this.loggedIn.next(true);
           } else {
             // User is already signed-in Firebase with the correct user.
             console.log("already signed in");
@@ -152,12 +153,14 @@ export class AuthService {
       const customer: Customer = {
         firstName: result.additionalUserInfo.profile.first_name,
         lastName: result.additionalUserInfo.profile.last_name,
+        imageUrl: result.additionalUserInfo.profile.picture.data.url,
         uidFirebase: result.additionalUserInfo.profile.id,
         email: result.additionalUserInfo.profile.email
       };
       const sqlUser = await this.create(customer).toPromise();
       localStorage.setItem("customer", JSON.stringify(sqlUser));
       this.customerSubject.next(sqlUser);
+      this.loggedIn.next(true);
     } catch (err) {
       this.loadingService.loading.dismiss();
       if (err.code === "auth/account-exists-with-different-credential") {
@@ -179,6 +182,7 @@ export class AuthService {
       const customer: Customer = {
         firstName: result.additionalUserInfo.profile.given_name,
         lastName: result.additionalUserInfo.profile.family_name,
+        imageUrl: result.additionalUserInfo.profile.picture,
         uidFirebase: result.additionalUserInfo.profile.id,
         email: result.additionalUserInfo.profile.email
       };
@@ -187,6 +191,7 @@ export class AuthService {
         .subscribe(response => {
           localStorage.setItem("customer", JSON.stringify(response));
           this.customerSubject.next(response);
+          this.loggedIn.next(true);
           console.log(response);
         });
     } catch (err) {

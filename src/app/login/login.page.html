@@ -1,18 +1,20 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Iniciar Sesión</ion-title>
+  <ion-toolbar [color]="themeService.currentTheme.backgroundColor">
+    <ion-title [ngStyle]="{'color': themeService.currentTheme.color}">Iniciar Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-align-items-center">
-  <ion-img class="ion-padding" [src]="'assets/img/logo.jpg'"></ion-img>
+  <div class="container" [ngStyle]="{'background-color': this.themeService.currentTheme.hexColor}">
+    <ion-img class="ion-padding" [src]="'assets/img/' + logo + '.jpg'"></ion-img>
+  </div>
 </ion-content>
 
-<ion-footer>
+<ion-footer [ngStyle]="{'background-color': this.themeService.currentTheme.hexColor}">
   <div class="ion-padding">
-    <ion-button color="primary" expand="block" (click)="login('facebook')">
-      <ion-icon name="logo-facebook"></ion-icon>
-      Iniciar con Facebook
+    <ion-button color="secondary" expand="block" (click)="login('facebook')">
+      <ion-icon color="light"name="logo-facebook"></ion-icon>
+      <ion-label color="light">Iniciar con Facebook</ion-label>
     </ion-button>
     <ion-button
       class="ion-margin-top"
@@ -20,17 +22,17 @@
       expand="block"
       (click)="login('google')"
     >
-      <ion-icon name="logo-google"></ion-icon>
-      Iniciar con Google
+      <ion-icon color="light" name="logo-google"></ion-icon>
+      <ion-label color="light">Iniciar con Google</ion-label>
     </ion-button>
-    <ion-button
+    <ion-button fill="solid"
       class="ion-margin-top"
-      color="dark"
+      [color]=" themeService.currentTheme.backgroundColor !== 'dark' ? 'dark' : 'tertiary'"
       expand="block"
       (click)="login('mail')"
     >
-      <ion-icon name="mail"></ion-icon>
-      Iniciar con eMail
+      <ion-icon color="light" name="mail"></ion-icon>
+      <ion-label class="ion-padding-left" color="light">Iniciar con eMail</ion-label>
     </ion-button>
   </div>
 </ion-footer>

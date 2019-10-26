@@ -7,11 +7,12 @@ import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
 import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { RouteReuseStrategy } from "@angular/router";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { GooglePlus } from "@ionic-native/google-plus/ngx";
 import { LoadingService } from "@app/_services/loading.service";
 import { AlertService } from "@app/_services/alert.service";
-import {ErrorInterceptor, JwtInterceptor} from "@app/_helpers";
+import { ErrorInterceptor, JwtInterceptor } from "@app/_helpers";
+import { ThemeService } from "@app/_services/theme.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import {ErrorInterceptor, JwtInterceptor} from "@app/_helpers";
     LoadingService,
     StatusBar,
     SplashScreen,
+    ThemeService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }

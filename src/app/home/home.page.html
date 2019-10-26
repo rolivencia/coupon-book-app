@@ -1,13 +1,12 @@
 <app-header></app-header>
 <ion-content>
   <div class="ion-padding">
-    The world is your oyster.
-    <p>
-      If you get lost, the
-      <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/"
-        >docs</a
-      >
-      will be your guide.
-    </p>
+
+    <ion-card class="ion-padding-vertical ion-padding-left ion-text-right" *ngFor="let page of pages" (click)="navigateTo(page.route)">
+      <ion-card-header>
+        <ion-card-subtitle>{{page.subtitle}}</ion-card-subtitle>
+        <ion-card-title>{{page.name}}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
   </div>
 </ion-content>

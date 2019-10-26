@@ -2,20 +2,38 @@
 
 <ion-content>
   <ion-content fullscreen>
+
+    
     <ion-card *ngIf="coupon">
-      <img [src]="coupon.imageUrl" />
-      <ion-card-header>
-        <ion-card-title>{{coupon.title}}</ion-card-title>
-        <ion-card-subtitle
-          >{{coupon.endsAt.format("DD/MM/YYYY HH:mm")}}</ion-card-subtitle
-        >
-      </ion-card-header>
-      <ion-card-content> {{coupon.description}} </ion-card-content>
-      <qrcode
+
+      <qrcode *ngIf="view === 'redeem'"
               [qrdata]="coupon.code"
-              [size]="96"
+              [size]="256"
               [level]="'M'"
       ></qrcode>
+
+      <img *ngIf="view === 'detail'"[src]="coupon.imageUrl" />
+
+      <ion-card-header>
+        <ion-card-title *ngIf="view === 'detail'">{{coupon.title}}</ion-card-title>
+        <ion-card-title *ngIf="view === 'redeem'">{{coupon.code}}</ion-card-title>
+        <ion-card-subtitle
+          >{{'Vigente hasta ' + coupon.endsAt.format("DD/MM/YYYY HH:mm")}}</ion-card-subtitle
+        >
+      </ion-card-header>
+      
+      <ion-card-content *ngIf="view === 'detail'"> {{coupon.description}} </ion-card-content>
+      <ion-card-content *ngIf="view === 'redeem'"> Promoción {{coupon.title}}, vigente hasta el {{coupon.endsAt.format("DD/MM/YYYY HH:mm")}} </ion-card-content>
+      
+      <ion-button class="ion-margin"
+                  expand="block"
+                  [disabled]="redeemed"
+                  [color]="themeService.currentTheme.backgroundColor === 'light' ? 'dark' : themeService.currentTheme.backgroundColor" 
+                  (click)="changeCouponView()">
+        <ion-label *ngIf="!redeemed">{{buttonLabel}}</ion-label>
+        <ion-label color="success" *ngIf="redeemed">¡Ya canjeaste este cupón!</ion-label>
+      </ion-button>
+
     </ion-card>
   </ion-content>
 </ion-content>

@@ -1,6 +1,18 @@
 <app-header [title]="'Perfil'"></app-header>
 
-<ion-content> Información del usuario (a desarrollar)</ion-content>
+<ion-content> 
+  <ion-card *ngIf="authService.currentCustomer">
+    <img [src]="authService.currentCustomer.imageUrl" />
+    <ion-card-header>
+      <ion-card-subtitle>Perfil de Usuario</ion-card-subtitle>
+      <ion-card-title>{{authService.currentCustomer.firstName + " " + authService.currentCustomer.lastName}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Dirección de Email: </strong>{{authService.currentCustomer.email}}</p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
 <ion-footer>
   <div class="ion-padding">
     <ion-button color="primary" expand="block" (click)="logout()">
