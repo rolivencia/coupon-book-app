@@ -17,7 +17,7 @@ export class LoginPage implements OnInit {
     public authService: AuthService,
     private navCtrl: NavController,
     private loadingService: LoadingService,
-    private themeService: ThemeService
+    public themeService: ThemeService
   ) {}
 
   async ngOnInit() {

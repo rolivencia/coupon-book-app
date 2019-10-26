@@ -11,7 +11,7 @@ import { Component } from "@angular/core";
 })
 export class AppComponent {
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
