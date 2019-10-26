@@ -6,7 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "nodemon server.js",
-    "build": "ionic build --prod",
+    "build": "ng build --aot --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
