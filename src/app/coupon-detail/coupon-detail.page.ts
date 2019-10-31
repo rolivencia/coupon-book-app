@@ -1,15 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Coupon } from "@app/_models/coupon";
-import { ThemeService } from "@app/_services/theme.service";
-import { AuthService } from "@app/_services/auth.service";
+import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Coupon} from "@app/_models/coupon";
+import {ThemeService} from "@app/_services/theme.service";
+import {AuthService} from "@app/_services/auth.service";
 
 @Component({
   selector: "app-coupon-detail",
   templateUrl: "./coupon-detail.page.html",
-  styleUrls: ["./coupon-detail.page.scss"]
+  styleUrls: ["./coupon-detail.page.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class CouponDetailPage implements OnInit {
+
   coupon: Coupon;
   buttonLabel: string = "Ver QR para Canjear";
   view: string = "detail";
@@ -41,6 +43,6 @@ export class CouponDetailPage implements OnInit {
   }
 
   generateQrCode(){
-    this.couponCustomerCode = JSON.stringify({customer: this.authService.currentCustomer, coupon: this.coupon});
+    this.couponCustomerCode = JSON.stringify({idCustomer: this.authService.currentCustomer.id, idCoupon: this.coupon.id});
   }
 }

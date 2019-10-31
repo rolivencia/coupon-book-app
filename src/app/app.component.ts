@@ -31,6 +31,16 @@ export class AppComponent {
       icon: "beer"
     },
     {
+      title: "Recomendados",
+      url: "/recommended",
+      icon: "pizza"
+    },
+    {
+      title: "Contacto y Reservas",
+      url: "/reservations",
+      icon: "send"
+    },
+    {
       title: "Perfil",
       url: "/profile",
       icon: "contact"

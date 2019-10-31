@@ -6,3 +6,17 @@ ion-button{
     margin-left: 10px;
   }
 }
+
+ion-card {
+  qrcode{
+    img{
+      height: 256px !important;
+      width: 256px !important;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+}
+
