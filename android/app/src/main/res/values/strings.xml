@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Brügge</string>
-    <string name="title_activity_main">Brügge</string>
+    <string name="app_name">Brugge</string>
+    <string name="title_activity_main">Brugge</string>
     <string name="package_name">com.turingstudio.brugge</string>
     <string name="fileprovider_authority">com.turingstudio.brugge.fileprovider</string>
     <string name="custom_url_scheme">com.turingstudio.brugge</string>
