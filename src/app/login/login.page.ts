@@ -49,6 +49,8 @@ export class LoginPage implements OnInit {
       case "google":
         this.authService.googleLogin();
         break;
+      case "mail":
+        break;
       default:
         break;
     }

@@ -9,7 +9,7 @@ import {ThemeService} from "@app/_services/theme.service";
   styleUrls: ["./header.component.scss"]
 })
 export class HeaderComponent implements OnInit {
-  @Input() title: string = "Brugge";
+  @Input() title: string = "BRUGGE";
 
   constructor(private menu: MenuController, private router: Router, public themeService: ThemeService) {}
 

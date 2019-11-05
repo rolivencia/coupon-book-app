@@ -1,6 +1,6 @@
 <app-header></app-header>
 <ion-content>
-  <div class="ion-padding">
+  <div>
     <ion-card
       class="ion-padding-vertical ion-padding-left ion-text-right"
       *ngFor="let page of pages"
@@ -8,8 +8,11 @@
       [ngStyle]="{'background-image': 'url(/assets/img/'+ page.id + '.jpg)'}"
     >
       <ion-card-header>
-        <ion-card-subtitle>{{page.subtitle}}</ion-card-subtitle>
-        <ion-card-title>{{page.name}}</ion-card-title>
+        <ion-card-subtitle><label>{{page.subtitle}}</label></ion-card-subtitle>
+        <ion-card-title>
+          <ion-icon name="beer"></ion-icon>
+          {{page.name}}
+        </ion-card-title>
       </ion-card-header>
     </ion-card>
   </div>
