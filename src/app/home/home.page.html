@@ -1,31 +1,6 @@
 <app-header></app-header>
 <ion-content>
   <div>
-    <ion-card
-      class="ion-padding-vertical ion-padding-left ion-text-right"
-      *ngFor="let page of pages"
-      (click)="navigateTo(page.route)"
-      [ngStyle]="{'background-image': 'url(/assets/img/'+ page.id + '.jpg)'}"
-    >
-      <ion-card-header>
-        <ion-grid>
-          <ion-row class="ion-justify-content-start">
-            <ion-col size="2">
-              <ion-icon [name]="page.icon"></ion-icon>
-            </ion-col>
-            <ion-col size="10">
-              <div>
-                <ion-card-subtitle
-                  ><label>{{page.subtitle}}</label></ion-card-subtitle
-                >
-                <ion-card-title>
-                  {{page.name}}
-                </ion-card-title>
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-header>
-    </ion-card>
+    <app-image-card *ngFor="let page of pages" [page]="page"> </app-image-card>
   </div>
 </ion-content>

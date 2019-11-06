@@ -33,6 +33,18 @@ const routes: Routes = [
     path: "register",
     loadChildren: () =>
       import("./register/register.module").then(m => m.RegisterPageModule)
+  },
+  {
+    path: "contact",
+    loadChildren: () =>
+      import("./contact/contact.module").then(m => m.ContactPageModule)
+  },
+  {
+    path: "recommended",
+    loadChildren: () =>
+      import("./recommended/recommended.module").then(
+        m => m.RecommendedPageModule
+      )
   }
 ];
 

@@ -6,12 +6,14 @@ import { RouterModule } from "@angular/router";
 
 import { HomePage } from "./home.page";
 import { HeaderModule } from "../_components/header/header.module";
+import { ImageCardModule } from "@app/_components/image-card/image-card.module";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     HeaderModule,
+    ImageCardModule,
     IonicModule,
     RouterModule.forChild([
       {
