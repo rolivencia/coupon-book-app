@@ -7,6 +7,7 @@ import { IonicModule } from "@ionic/angular";
 
 import { ContactPage } from "./contact.page";
 import { HeaderModule } from "@app/_components/header/header.module";
+import { ImageCardModule } from "@app/_components/image-card/image-card.module";
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     HeaderModule,
+    ImageCardModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],

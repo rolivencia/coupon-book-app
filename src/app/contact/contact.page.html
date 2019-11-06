@@ -1,5 +1,5 @@
 <app-header [title]="'Contacto'"></app-header>
 
 <ion-content>
-
+  <app-image-card *ngFor="let page of pages" [page]="page"></app-image-card>
 </ion-content>
