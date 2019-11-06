@@ -28,7 +28,7 @@ export class AppComponent {
     {
       title: "Cuponera",
       url: "/coupons",
-      icon: "beer"
+      icon: "pricetags"
     },
     {
       title: "Recomendados",
