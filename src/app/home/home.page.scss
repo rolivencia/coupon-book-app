@@ -7,6 +7,11 @@ ion-card {
     font-size: 1.75rem;
   }
 
+  ion-icon{
+    @extend ion-card-title;
+    font-size: 3rem;
+  }
+
   ion-card-subtitle{
     label{
       background-color: white;

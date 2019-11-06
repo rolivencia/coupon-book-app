@@ -11,9 +11,9 @@ import {Router} from "@angular/router";
 export class HomePage implements OnInit {
 
   pages = [
-    { id: "coupons", name: "Cuponera", subtitle: 'Mirá las promos vigentes', route: '/coupons'},
-    { id: "recommended", name: "Recomendados", subtitle: 'Destacados en food & drinks', route: '/recommended'},
-    { id: "contact", name: "Contacto y Reservas", subtitle: 'Escribinos en esta sección', route: '/contact'},
+    { id: "coupons", name: "Cuponera", subtitle: 'Mirá las promos vigentes', route: '/coupons', icon: 'beer'},
+    { id: "recommended", name: "Recomendados", subtitle: 'Food & Drinks destacados', route: '/recommended', icon: 'pizza'},
+    { id: "contact", name: "Contacto", subtitle: 'Mensajes y reservas', route: '/contact', icon: 'send'},
     // { id: "profile", name: "Perfil", subtitle: 'Accedé a tu perfil de usuario', route: '/profile'}
   ];
 

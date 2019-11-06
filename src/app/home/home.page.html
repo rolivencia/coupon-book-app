@@ -8,11 +8,23 @@
       [ngStyle]="{'background-image': 'url(/assets/img/'+ page.id + '.jpg)'}"
     >
       <ion-card-header>
-        <ion-card-subtitle><label>{{page.subtitle}}</label></ion-card-subtitle>
-        <ion-card-title>
-          <ion-icon name="beer"></ion-icon>
-          {{page.name}}
-        </ion-card-title>
+        <ion-grid>
+          <ion-row class="ion-justify-content-start">
+            <ion-col size="2">
+              <ion-icon [name]="page.icon"></ion-icon>
+            </ion-col>
+            <ion-col size="10">
+              <div>
+                <ion-card-subtitle
+                  ><label>{{page.subtitle}}</label></ion-card-subtitle
+                >
+                <ion-card-title>
+                  {{page.name}}
+                </ion-card-title>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-card-header>
     </ion-card>
   </div>
