@@ -1,22 +1,44 @@
 <app-header [title]="'Perfil'"></app-header>
 
-<ion-content> 
+<ion-content>
+
   <ion-card *ngIf="authService.currentCustomer">
-    <img [src]="authService.currentCustomer.imageUrl" />
-    <ion-card-header>
-      <ion-card-subtitle>Perfil de Usuario</ion-card-subtitle>
-      <ion-card-title>{{authService.currentCustomer.firstName + " " + authService.currentCustomer.lastName}}</ion-card-title>
-    </ion-card-header>
+
+    <ion-grid>
+      <ion-row class="ion-justify-content-start">
+        <ion-col size="3">
+          <ion-avatar>
+            <img [src]="authService.currentCustomer.imageUrl" />
+          </ion-avatar>
+        </ion-col>
+        <ion-col size="9">
+          <ion-card-header>
+            <ion-card-subtitle>Perfil de Usuario</ion-card-subtitle>
+            <ion-card-title>{{authService.currentCustomer.firstName + " " + authService.currentCustomer.lastName}}</ion-card-title>
+          </ion-card-header>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
     <ion-card-content>
       <p><strong>Dirección de Email: </strong>{{authService.currentCustomer.email}}</p>
     </ion-card-content>
+
   </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Mis canjes</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+
 </ion-content>
 
 <ion-footer>
   <div class="ion-padding">
     <ion-button color="primary" expand="block" (click)="logout()">
       Cerrar Sesión</ion-button
+
     >
   </div>
 </ion-footer>

@@ -1,26 +1,22 @@
 <app-header [title]="'Cuponera'"></app-header>
 
 <ion-content>
-    <ion-list>
-        <ion-list-header>
-            Cupones disponibles
-        </ion-list-header>
 
-        <ion-item (click)="viewDetail(coupon)" *ngFor="let coupon of couponService.coupons">
-            <ion-thumbnail slot="start">
-                <img [src]="coupon.imageUrl">
-            </ion-thumbnail>
-            <ion-label>
-                <h4>Hasta {{coupon.endsAt.format("DD/MM/YYYY hh:mm")}}</h4>
-                <h1>{{coupon.title}}</h1>
-                <p>{{coupon.description}}</p>
-            </ion-label>
-        </ion-item>
+    <ion-card (click)="viewDetail(coupon)" *ngFor="let coupon of couponService.coupons">
+        <ion-grid>
+            <ion-row class="ion-align-items-center">
+                <ion-col size="4">
+                    <img [src]="coupon.imageUrl">
+                </ion-col>
+                <ion-col size="8">
+                    <ion-label>
+                        <h4>Hasta {{coupon.endsAt.format("DD/MM/YYYY hh:mm")}}</h4>
+                        <h1>{{coupon.title}}</h1>
+                        <p>{{coupon.description}}</p>
+                    </ion-label>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
 
-    </ion-list>
-    <ion-list>
-        <ion-list-header>
-            Tus últimos canjes
-        </ion-list-header>
-    </ion-list>
 </ion-content>

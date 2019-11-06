@@ -37,7 +37,7 @@ export class AppComponent {
     },
     {
       title: "Contacto y Reservas",
-      url: "/reservations",
+      url: "/contact",
       icon: "send"
     },
     {
