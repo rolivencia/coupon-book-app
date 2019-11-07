@@ -8,6 +8,10 @@ ion-card {
     font-size: 1.75rem;
   }
 
+  ion-card-subtitle{
+    margin-bottom: 0.5rem;
+  }
+
   ion-icon{
     @extend ion-card-title;
     font-size: 3rem;

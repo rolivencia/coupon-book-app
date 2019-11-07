@@ -19,7 +19,7 @@ export class LoadingService {
 
   public async showLoading(message?: string) {
     this.loading = await this.loadingCtrl.create({
-      message: "Iniciando sesión..."
+      message: message ? message : "Iniciando sesión..."
     });
 
     this.loading.present();

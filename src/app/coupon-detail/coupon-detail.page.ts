@@ -13,7 +13,7 @@ import {AuthService} from "@app/_services/auth.service";
 export class CouponDetailPage implements OnInit {
 
   coupon: Coupon;
-  buttonLabel: string = "Ver QR para Canjear";
+  buttonLabel: string = "Volver";
   view: string = "detail";
   redeemed: boolean = false;
 
@@ -29,20 +29,15 @@ export class CouponDetailPage implements OnInit {
   ngOnInit() {
     if (this.route.snapshot.data["coupon"]) {
       this.coupon = this.route.snapshot.data["coupon"];
+      this.generateQrCode();
     }
-  }
-
-  ngAfterViewInit(){
-    this.generateQrCode();
-  }
-
-  changeCouponView() {
-    this.view = this.view === "detail" ? "redeem" : "detail";
-    this.buttonLabel =
-      this.view === "detail" ? "Ver QR para Canjear" : "Volver";
   }
 
   generateQrCode(){
     this.couponCustomerCode = JSON.stringify({idCustomer: this.authService.currentCustomer.id, idCoupon: this.coupon.id});
+  }
+
+  goBack() {
+    this.router.navigate(['/coupons']);
   }
 }

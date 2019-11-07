@@ -40,11 +40,11 @@ export class AppComponent {
       url: "/contact",
       icon: "send"
     },
-    {
-      title: "Perfil",
-      url: "/profile",
-      icon: "contact"
-    }
+    // {
+    //   title: "Perfil",
+    //   url: "/profile",
+    //   icon: "contact"
+    // }
   ];
 
   initializeApp() {

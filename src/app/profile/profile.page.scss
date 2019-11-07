@@ -2,3 +2,12 @@ ion-avatar{
   width: 80px;
   height: 80px;
 }
+
+ion-button{
+  ion-label{
+    font-family: 'Open Sans Condensed', sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-left: 10px;
+  }
+}

@@ -36,9 +36,9 @@
 
 <ion-footer>
   <div class="ion-padding">
-    <ion-button color="primary" expand="block" (click)="logout()">
-      Cerrar Sesión</ion-button
-
+    <ion-button [color]="themeService.currentTheme.backgroundColor === 'light' ? 'dark' : themeService.currentTheme.backgroundColor" expand="block" (click)="logout()">
+      <ion-label>Cerrar Sesión</ion-label>
+    </ion-button
     >
   </div>
 </ion-footer>
