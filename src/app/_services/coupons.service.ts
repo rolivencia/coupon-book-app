@@ -22,9 +22,9 @@ export class CouponService {
     this._coupons = value;
   }
 
-  public getAll = (): Observable<Coupon[]> => {
+  public getAll = (expired = false, deleted = false): Observable<Coupon[]> => {
     return this.http
-      .get<Coupon[]>(`${environment.apiUrl}/coupon`)
+      .get<Coupon[]>(`${environment.apiUrl}/coupon/all/${expired}/${deleted}`)
       .pipe(first())
       .pipe(
         map(coupons =>
