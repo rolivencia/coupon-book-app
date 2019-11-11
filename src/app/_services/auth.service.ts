@@ -163,14 +163,7 @@ export class AuthService {
       this.loggedIn.next(true);
     } catch (err) {
       this.loadingService.loading.dismiss();
-      if (err.code === "auth/account-exists-with-different-credential") {
-        this.alertService.show(
-          "¡Error!",
-          "¡Vaya! Tu email ya está asociado a otra plataforma.\n\n Intentá ingresar con una de las otras dos opciones."
-        );
-      } else {
-        console.error(err);
-      }
+      this.errorHandler(err);
     }
   }
 
@@ -186,15 +179,23 @@ export class AuthService {
         uidFirebase: result.additionalUserInfo.profile.id,
         email: result.additionalUserInfo.profile.email
       };
-      const sqlUser = await this.create(customer)
-        .pipe(first())
-        .subscribe(response => {
-          localStorage.setItem("customer", JSON.stringify(response));
-          this.customerSubject.next(response);
-          this.loggedIn.next(true);
-          console.log(response);
-        });
+      const sqlUser = await this.create(customer).toPromise();
+      localStorage.setItem("customer", JSON.stringify(sqlUser));
+      this.customerSubject.next(sqlUser);
+      this.loggedIn.next(true);
     } catch (err) {
+      this.loadingService.loading.dismiss();
+      this.errorHandler(err);
+    }
+  }
+
+  errorHandler(err){
+    if (err.code === "auth/account-exists-with-different-credential") {
+      this.alertService.show(
+          "¡Error!",
+          "¡Vaya! Tu email ya está asociado a otra plataforma.\n\n Intentá ingresar con una de las otras dos opciones."
+      );
+    } else {
       console.error(err);
     }
   }
@@ -230,7 +231,8 @@ export class AuthService {
         firstName: customer.firstName,
         lastName: customer.lastName,
         email: customer.email,
-        uidFirebase: customer.uidFirebase
+        uidFirebase: customer.uidFirebase,
+        imageUrl: customer.imageUrl
       }
     );
   }
