@@ -1,13 +1,9 @@
 <ion-app>
   <ion-split-pane>
     <ion-menu *ngIf="authService.loggedIn.value" type="overlay">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Menú</ion-title>
-        </ion-toolbar>
-      </ion-header>
+      <app-header [title]="'Menú'" [menuVisible]="false" [profileVisible]="false"></app-header>
       <ion-content>
-        <ion-list>
+        <ion-list class="ion-no-padding">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>

@@ -31,7 +31,8 @@
     <ion-card-header>
       <ion-card-title [ngStyle]="{'color': themeService.currentTheme.color}">Últimos canjes</ion-card-title>
     </ion-card-header>
-    <ion-card class="redeemed-coupon" *ngFor="let redeemedCoupon of redeemedCoupons" [ngStyle]="{'background-color': themeService.currentTheme.color}">
+    
+    <ion-card class="redeemed-coupon" *ngFor="let redeemedCoupon of redeemedCoupons" [ngStyle]="{'background-color': 'white'}">
 
       <ion-grid class="ion-no-padding">
         <ion-row>

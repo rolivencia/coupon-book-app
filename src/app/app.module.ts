@@ -13,12 +13,14 @@ import { LoadingService } from "@app/_services/loading.service";
 import { AlertService } from "@app/_services/alert.service";
 import { ErrorInterceptor, JwtInterceptor } from "@app/_helpers";
 import { ThemeService } from "@app/_services/theme.service";
+import { HeaderModule } from "@app/_components/header/header.module";
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
+    HeaderModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule

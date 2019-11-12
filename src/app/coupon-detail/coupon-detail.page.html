@@ -5,10 +5,17 @@
   <ion-card *ngIf="coupon">
 
     <div class="p-2">
-      <qrcode [qrdata]="couponCustomerCode"
-              [size]="300"
-              [level]="'M'"
-      ></qrcode>
+      <ion-grid>
+        <ion-row class="ion-justify-content-center">
+          <ion-col size="12">
+            <qrcode [qrdata]="couponCustomerCode"
+
+                    [level]="'M'"
+            ></qrcode>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
     </div>
 
     <ion-card-header class="ion-no-padding">
@@ -18,7 +25,7 @@
       >
     </ion-card-header>
 
-    <ion-card-content>{{coupon.title}}. {{coupon.description}}. </ion-card-content>
+    <ion-card-content class="ion-no-padding"><div class="ion-padding-horizontal">{{coupon.title}}. {{coupon.description}}. </div></ion-card-content>
 
     <ion-button class="ion-margin"
                 expand="block"
