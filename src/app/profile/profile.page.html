@@ -2,9 +2,9 @@
 
 <ion-content>
 
-  <ion-card *ngIf="authService.currentCustomer">
+  <ion-card *ngIf="authService.currentCustomer" [ngStyle]="{'background-color': themeService.currentTheme.backgroundColor === 'light' ? 'black' : themeService.currentTheme.color}" >
 
-    <ion-grid>
+    <ion-grid >
       <ion-row class="ion-justify-content-start">
         <ion-col size="3">
           <ion-avatar>
@@ -22,14 +22,37 @@
 
     <ion-card-content>
       <p><strong>Dirección de Email: </strong>{{authService.currentCustomer.email}}</p>
+      <p><strong>Inició sesión con: </strong>{{authService.loggedWith}}</p>
     </ion-card-content>
 
   </ion-card>
 
-  <ion-card>
+  <ion-card [ngStyle]="{'background-color': themeService.currentTheme.hexColor}">
     <ion-card-header>
-      <ion-card-title>Mis canjes</ion-card-title>
+      <ion-card-title [ngStyle]="{'color': themeService.currentTheme.color}">Últimos canjes</ion-card-title>
     </ion-card-header>
+    <ion-card class="redeemed-coupon" *ngFor="let redeemedCoupon of redeemedCoupons" [ngStyle]="{'background-color': themeService.currentTheme.color}">
+
+      <ion-grid class="ion-no-padding">
+        <ion-row>
+          <ion-col size="3" class="ion-no-padding">
+            <ion-thumbnail><img [src]="redeemedCoupon.coupon.imageUrl"></ion-thumbnail>
+          </ion-col>
+          <ion-col size="9">
+            <ion-card-header class="ion-no-padding">
+              <ion-card-title>
+                {{redeemedCoupon.coupon.title}}
+              </ion-card-title>
+              <ion-card-subtitle>
+                {{'Canjeado el: ' + redeemedCoupon.createdAt.format("DD/MM/YYYY - HH:mm")}}
+              </ion-card-subtitle>
+            </ion-card-header>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+
+    </ion-card>
   </ion-card>
 
 </ion-content>

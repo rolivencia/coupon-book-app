@@ -23,12 +23,12 @@ export class ThemeService {
       backgroundColor: "danger",
       logo: "logo-red"
     },
-    {
-      color: "black",
-      hexColor: "#ffffff",
-      backgroundColor: "light",
-      logo: "logo-white"
-    }
+    // {
+    //   color: "black",
+    //   hexColor: "#ffffff",
+    //   backgroundColor: "light",
+    //   logo: "logo-white"
+    // }
   ];
 
   private _currentTheme: Theme;

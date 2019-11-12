@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { first, map } from "rxjs/operators";
 import * as moment from "moment";
-import {Coupon} from '@app/_models/coupon';
+import { Coupon } from "@app/_models/coupon";
 
 @Injectable({
   providedIn: "root"
@@ -40,6 +40,18 @@ export class CouponService {
           }))
         )
       );
+  };
+
+    /**
+     * Retrieves last 5 redeemed coupons, sorted starting from the latest, for a given customer
+     * @param idCustomer
+     */
+  public getRedeemed = (idCustomer: number) => {
+    return this.http
+      .get<any>(
+        `${environment.apiUrl}/coupon/getRedeemed/${idCustomer}/${3}/${0}`
+      )
+      .pipe(first());
   };
 
   public getById = (id: number): Coupon => {

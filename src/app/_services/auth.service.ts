@@ -18,8 +18,10 @@ import { first } from "rxjs/operators";
   providedIn: "root"
 })
 export class AuthService {
+
   private customerSubject: BehaviorSubject<Customer>;
   public customer: Observable<Customer>;
+  public loggedWith: string = "";
 
   public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -64,6 +66,7 @@ export class AuthService {
     firebase.auth().onAuthStateChanged(firebaseUser => {
       this.zone.run(() => {
         firebaseUser ? this.loggedIn.next(true) : this.loggedIn.next(false);
+        this.loggedWith = firebaseUser.providerData[0].providerId;
       });
     });
   }
@@ -160,6 +163,7 @@ export class AuthService {
       const sqlUser = await this.create(customer).toPromise();
       localStorage.setItem("customer", JSON.stringify(sqlUser));
       this.customerSubject.next(sqlUser);
+      this.loggedWith = "Facebook";
       this.loggedIn.next(true);
     } catch (err) {
       this.loadingService.loading.dismiss();
@@ -182,6 +186,7 @@ export class AuthService {
       const sqlUser = await this.create(customer).toPromise();
       localStorage.setItem("customer", JSON.stringify(sqlUser));
       this.customerSubject.next(sqlUser);
+      this.loggedWith = "Google";
       this.loggedIn.next(true);
     } catch (err) {
       this.loadingService.loading.dismiss();
