@@ -66,7 +66,9 @@ export class AuthService {
     firebase.auth().onAuthStateChanged(firebaseUser => {
       this.zone.run(() => {
         firebaseUser ? this.loggedIn.next(true) : this.loggedIn.next(false);
-        this.loggedWith = firebaseUser.providerData[0].providerId;
+        if(firebaseUser){
+          this.loggedWith = firebaseUser.providerData ? firebaseUser.providerData[0].providerId : null;
+        }
       });
     });
   }
