@@ -24,6 +24,13 @@ ion-card {
       color: black;
       font-family: "Open Sans Condensed";
       font-size: 0.9rem;
+      line-height: 1.5rem;
+    }
+  }
+
+  ion-label label{
+    &.expiration-date{
+      color: white;
     }
   }
 }

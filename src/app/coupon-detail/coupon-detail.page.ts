@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Coupon} from "@app/_models/coupon";
 import {ThemeService} from "@app/_services/theme.service";
 import {AuthService} from "@app/_services/auth.service";
-
+import * as moment from 'moment';
 @Component({
   selector: "app-coupon-detail",
   templateUrl: "./coupon-detail.page.html",
@@ -24,7 +24,9 @@ export class CouponDetailPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public themeService: ThemeService
-  ) {}
+  ) {
+    moment.locale('es');
+  }
 
   ngOnInit() {
     if (this.route.snapshot.data["coupon"]) {

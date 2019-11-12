@@ -10,6 +10,8 @@ import {ThemeService} from "@app/_services/theme.service";
 })
 export class HeaderComponent implements OnInit {
   @Input() title: string = "BRUGGE";
+  @Input() menuVisible: boolean = true;
+  @Input() profileVisible: boolean = true;
 
   constructor(private menu: MenuController, private router: Router, public themeService: ThemeService) {}
 

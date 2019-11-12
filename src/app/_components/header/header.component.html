@@ -1,11 +1,11 @@
 <ion-header>
   <ion-toolbar [color]="themeService.currentTheme.backgroundColor">
-    <ion-buttons slot="end">
+    <ion-buttons slot="end" *ngIf="profileVisible">
       <ion-button (click)="toProfile()">
         <ion-icon slot="icon-only" name="contact" ></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" *ngIf="menuVisible">
       <ion-button>
         <ion-menu-button></ion-menu-button>
       </ion-button>
