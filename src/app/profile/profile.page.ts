@@ -12,7 +12,9 @@ import {first} from "rxjs/operators";
   styleUrls: ["./profile.page.scss"]
 })
 export class ProfilePage implements OnInit {
+
   redeemedCoupons = [];
+  loaded = false;
 
   constructor(
     public authService: AuthService,
@@ -27,6 +29,7 @@ export class ProfilePage implements OnInit {
       .getRedeemed(this.authService.currentCustomer.id)
       .pipe(first())
       .subscribe(redeemed => {
+        this.loaded = true;
         this.loadingService.loading.dismiss();
         this.redeemedCoupons = redeemed;
         this.redeemedCoupons = this.formatRedemptionDates();

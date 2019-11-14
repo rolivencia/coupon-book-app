@@ -1,14 +1,17 @@
 <ion-card
   class="ion-padding-vertical ion-padding-left ion-text-right"
   (click)="navigateTo(page.route)"
-  [ngStyle]="{ 'background-image': 'url(/assets/img/' + page.id + '.jpg)' }"
+  [ngStyle]="{
+    'background-image': 'url(/assets/img/' + page.id + '.jpg)',
+    height: height + 'px'
+  }"
 >
   <ion-card-header>
     <ion-grid>
       <ion-row class="ion-justify-content-end ion-align-items-center">
         <div>
           <ion-card-subtitle *ngIf="page.subtitle"
-          ><label>{{ page.subtitle }}</label></ion-card-subtitle
+            ><label>{{ page.subtitle }}</label></ion-card-subtitle
           >
         </div>
       </ion-row>
