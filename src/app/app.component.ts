@@ -3,6 +3,7 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { AuthService } from "./_services/auth.service";
 import { Platform } from "@ionic/angular";
 import { Component } from "@angular/core";
+import * as moment from 'moment';
 
 @Component({
   selector: "app-root",
@@ -16,6 +17,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
+    moment.locale('es');
     this.initializeApp();
   }
 

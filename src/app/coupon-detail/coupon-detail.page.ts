@@ -1,14 +1,13 @@
-import {Component, OnInit, ViewEncapsulation} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Coupon} from "@app/_models/coupon";
 import {ThemeService} from "@app/_services/theme.service";
 import {AuthService} from "@app/_services/auth.service";
-import * as moment from 'moment';
+
 @Component({
   selector: "app-coupon-detail",
   templateUrl: "./coupon-detail.page.html",
-  styleUrls: ["./coupon-detail.page.scss"],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ["./coupon-detail.page.scss"]
 })
 export class CouponDetailPage implements OnInit {
 
@@ -25,7 +24,6 @@ export class CouponDetailPage implements OnInit {
     private router: Router,
     public themeService: ThemeService
   ) {
-    moment.locale('es');
   }
 
   ngOnInit() {

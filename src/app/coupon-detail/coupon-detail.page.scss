@@ -9,6 +9,11 @@ ion-button{
 
 ion-card {
   background-color: white !important;
+
+  ion-card-title{
+    font-size: 1.25rem;
+  }
+
   qrcode{
     img{
       //margin-left: auto !important;

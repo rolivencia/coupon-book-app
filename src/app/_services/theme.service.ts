@@ -7,20 +7,23 @@ export class ThemeService {
   private themes = [
     {
       color: "white",
-      hexColor: "#040404",
+      hexColor: "#ffffff",
+      hexBackgroundColor: "#040404",
       backgroundColor: "dark",
       logo: "logo-black"
     },
     {
       color: "white",
-      hexColor: "#7B6655",
+      hexColor: "#ffffff",
       backgroundColor: "tertiary",
+      hexBackgroundColor: "#7B6655",
       logo: "logo-lightbrown"
     },
     {
       color: "white",
-      hexColor: "#C41013",
+      hexColor: "#ffffff",
       backgroundColor: "danger",
+      hexBackgroundColor: "#C41013",
       logo: "logo-red"
     },
     // {
@@ -50,7 +53,7 @@ export class ThemeService {
 
 export class Theme {
   public color: string;
-  public hexColor: string;
+  public hexBackgroundColor: string;
   public logo: string;
   public backgroundColor: string;
 }
