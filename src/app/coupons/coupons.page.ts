@@ -4,28 +4,31 @@ import { first } from "rxjs/operators";
 import { Coupon } from "@app/_models/coupon";
 import { Router } from "@angular/router";
 import { LoadingService } from "@app/_services/loading.service";
+import { AuthService } from "@app/_services/auth.service";
 
 @Component({
   selector: "app-coupons",
   templateUrl: "./coupons.page.html",
   styleUrls: ["./coupons.page.scss"]
 })
-export class CouponsPage implements OnInit {
+export class CouponsPage {
   constructor(
     public couponService: CouponService,
+    public authService: AuthService,
     private loadingService: LoadingService,
     private router: Router
   ) {}
 
-  async ngOnInit() {
-    await this.loadingService.showLoading('Cargando...');
+  async ionViewWillEnter(){
+    await this.loadingService.showLoading("Cargando...");
+
     this.couponService
-      .getAll()
-      .pipe(first())
-      .subscribe(result => {
-        this.loadingService.loading.dismiss();
-        this.couponService.coupons = result;
-      });
+        .getRedeemable(this.authService.currentCustomer)
+        .pipe(first())
+        .subscribe(result => {
+          this.loadingService.loading.dismiss();
+          this.couponService.coupons = result;
+        });
   }
 
   viewDetail(coupon: Coupon) {

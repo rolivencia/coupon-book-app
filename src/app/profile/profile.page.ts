@@ -11,7 +11,7 @@ import {first} from "rxjs/operators";
   templateUrl: "./profile.page.html",
   styleUrls: ["./profile.page.scss"]
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
 
   redeemedCoupons = [];
   loaded = false;
@@ -23,7 +23,7 @@ export class ProfilePage implements OnInit {
     public themeService: ThemeService
   ) {}
 
-  async ngOnInit() {
+  async ionViewWillEnter() {
     await this.loadingService.showLoading('Cargando...');
     this.couponService
       .getRedeemed(this.authService.currentCustomer.id)
