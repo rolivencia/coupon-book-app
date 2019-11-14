@@ -53,7 +53,8 @@ export class ThemeService {
 
 export class Theme {
   public color: string;
+  public hexColor: string;
+  public backgroundColor: string;
   public hexBackgroundColor: string;
   public logo: string;
-  public backgroundColor: string;
 }
