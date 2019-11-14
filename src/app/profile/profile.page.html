@@ -21,8 +21,8 @@
     </ion-grid>
 
     <ion-card-content>
-      <p><strong>Dirección de Email: </strong>{{authService.currentCustomer.email}}</p>
-      <p><strong>Inició sesión con: </strong>{{authService.loggedWith}}</p>
+      <p><strong>Email: </strong>{{authService.currentCustomer.email}}</p>
+      <p><strong>Plataforma: </strong>{{authService.loggedWith.replace('.com','')}}</p>
     </ion-card-content>
 
   </ion-card>
