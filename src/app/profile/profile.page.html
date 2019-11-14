@@ -22,7 +22,7 @@
 
     <ion-card-content>
       <p><strong>Email: </strong>{{authService.currentCustomer.email}}</p>
-      <p><strong>Plataforma: </strong>{{authService.loggedWith.replace('.com','')}}</p>
+      <p><strong>Plataforma: </strong>{{generatePlatformInfo(authService.loggedWith)}}</p>
     </ion-card-content>
 
   </ion-card>

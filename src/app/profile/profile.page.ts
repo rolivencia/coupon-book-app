@@ -1,10 +1,10 @@
-import { Component, OnInit } from "@angular/core";
-import { AuthService } from "../_services/auth.service";
-import { ThemeService } from "@app/_services/theme.service";
-import { CouponService } from "@app/_services/coupons.service";
+import {Component, OnInit} from "@angular/core";
+import {AuthService} from "../_services/auth.service";
+import {ThemeService} from "@app/_services/theme.service";
+import {CouponService} from "@app/_services/coupons.service";
 import * as moment from "moment";
-import { LoadingService } from "@app/_services/loading.service";
-import { first } from "rxjs/operators";
+import {LoadingService} from "@app/_services/loading.service";
+import {first} from "rxjs/operators";
 
 @Component({
   selector: "app-profile",
@@ -41,5 +41,12 @@ export class ProfilePage implements OnInit {
     return this.redeemedCoupons.map(redeemedCoupon => {
       return { ...redeemedCoupon, createdAt: moment(redeemedCoupon.createdAt) };
     });
+  }
+
+  generatePlatformInfo(original: string){
+    // Remove .com domain
+    const removedDomain = this.authService.loggedWith.replace('.com','');
+    // Capitalize
+    return removedDomain.charAt(0).toUpperCase() + removedDomain.slice(1);
   }
 }

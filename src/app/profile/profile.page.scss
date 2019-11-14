@@ -3,6 +3,19 @@ ion-avatar{
   height: 80px;
 }
 
+ion-card-header{
+  ion-card-subtitle{
+    font-family: 'Open Sans Condensed', sans-serif;
+  }
+}
+
+p {
+  font-family: 'Open Sans Condensed', sans-serif;
+  strong{
+    font-weight: 500;  
+  }
+}
+
 ion-button{
   ion-label{
     font-family: 'Open Sans Condensed', sans-serif;
