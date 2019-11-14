@@ -4,28 +4,21 @@
 
   <ion-card *ngIf="coupon">
 
-    <div class="ion-padding">
-      <ion-grid>
-        <ion-row class="ion-justify-content-center">
-          <ion-col size="12">
-            <qrcode [qrdata]="couponCustomerCode"
-
-                    [level]="'M'"
-            ></qrcode>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
+    <div class="">
+      <qrcode [qrdata]="couponCustomerCode"
+              [size]="300"
+              [level]="'M'"
+      ></qrcode>
     </div>
 
     <ion-card-header class="ion-no-padding">
-      <ion-card-title class="ion-text-center ion-padding-bottom">{{coupon.code}} - {{this.authService.currentCustomer.id}}</ion-card-title>
-      <ion-card-subtitle class="ion-text-center ion-no-margin"
+      <ion-card-title class="ion-text-center ion-padding-vertical">{{coupon.code}} - {{this.authService.currentCustomer.id}}</ion-card-title>
+      <ion-card-subtitle class="ion-text-center"
       >{{'Vigente hasta el' }}<br> {{coupon.endsAt.format("DD") + " de " + coupon.endsAt.format("MMMM") + " de " + coupon.endsAt.format("YYYY") + " a las " + coupon.endsAt.format("HH:mm")}}</ion-card-subtitle
       >
     </ion-card-header>
 
-    <ion-card-content class="ion-no-padding ion-margin-top"><div class="ion-padding-horizontal">{{coupon.title}}. {{coupon.description}}. </div></ion-card-content>
+    <ion-card-content>{{coupon.title}}. {{coupon.description}}. </ion-card-content>
 
     <ion-button class="ion-margin"
                 expand="block"

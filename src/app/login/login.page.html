@@ -1,6 +1,7 @@
 <app-header [title]="'Iniciar Sesión'" [profileVisible]="false" [menuVisible]="false"></app-header>
+
 <ion-content class="ion-align-items-center">
-  <div class="container" [ngStyle]="{'background-color': this.themeService.currentTheme.hexColor}">
+  <div class="container" [ngStyle]="{'background-color': this.themeService.currentTheme.hexBackgroundColor}">
     <ion-img class="ion-padding" [src]="'assets/img/' + logo + '.jpg'"></ion-img>
   </div>
 </ion-content>

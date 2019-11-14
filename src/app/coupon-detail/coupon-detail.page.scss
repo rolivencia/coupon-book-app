@@ -16,11 +16,12 @@ ion-card {
 
   qrcode{
     img{
-      //margin-left: auto !important;
-      //margin-right: auto !important;
-      //margin-top: 20px !important;
-      //margin-bottom: 20px !important;
+      max-width: 250px;
+      max-height: 250px;
+      margin-left: auto !important;
+      margin-right: auto !important;
     }
   }
+
 }
 
