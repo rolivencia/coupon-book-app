@@ -1,11 +1,16 @@
 ion-card {
   background-size: cover;
-  min-height: 100px;
+  height: 180px;
 
   ion-card-title {
     letter-spacing: 0.025rem;
     color: white;
-    font-size: 1.75rem;
+    font-size: 2.25rem;
+  }
+
+  ion-card-header {
+    height: 100%;
+    padding: 16px;
   }
 
   ion-card-subtitle{
@@ -23,8 +28,9 @@ ion-card {
       padding: 0.125rem;
       color: black;
       font-family: "Open Sans Condensed";
-      font-size: 0.9rem;
-      line-height: 1.5rem;
+      line-height: 1.75rem;
+      font-weight: 500;
+      font-size: 0.8rem;
     }
   }
 

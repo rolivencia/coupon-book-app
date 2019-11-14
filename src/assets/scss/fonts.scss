@@ -19,13 +19,13 @@ p {
 ion-content{
   background-color: #cccccc;
   //opacity: 0.5;
-  --background: url("/assets/img/background.png") 0/100% no-repeat
+  --background: url("/assets/img/background.png") 100% no-repeat
 }
 
-ion-split-pane{
-  ion-menu{
-    ion-content{
-      --background: url("/assets/img/background-menu.png") 0/100% no-repeat
-    }
-  }
-}
+//ion-split-pane{
+//  ion-menu{
+//    ion-content{
+//      --background: url("/assets/img/background-menu.png") 0/100% no-repeat
+//    }
+//  }
+//}

@@ -5,15 +5,19 @@
 >
   <ion-card-header>
     <ion-grid>
-      <ion-row class="ion-justify-content-start ion-align-items-center">
-        <ion-col size="2">
+      <ion-row class="ion-justify-content-end ion-align-items-center">
+        <div>
+          <ion-card-subtitle *ngIf="page.subtitle"
+          ><label>{{ page.subtitle }}</label></ion-card-subtitle
+          >
+        </div>
+      </ion-row>
+      <ion-row class="ion-justify-content-start ion-align-items-start">
+        <ion-col size="2" class="ion-no-padding">
           <ion-icon *ngIf="page.icon" [name]="page.icon"></ion-icon>
         </ion-col>
-        <ion-col size="10">
+        <ion-col size="10" class="ion-no-padding">
           <div>
-            <ion-card-subtitle *ngIf="page.subtitle"
-              ><label>{{ page.subtitle }}</label></ion-card-subtitle
-            >
             <ion-card-title *ngIf="page.name">
               {{ page.name }}
             </ion-card-title>
