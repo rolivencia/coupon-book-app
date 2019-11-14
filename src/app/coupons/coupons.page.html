@@ -2,41 +2,41 @@
 
 <ion-content>
 
-<!--    <ion-card (click)="viewDetail(coupon)" *ngFor="let coupon of couponService.coupons">-->
-<!--        <div class="ion-no-padding ion-justify-content-between">-->
-<!--            <div>-->
-<!--            <img [src]="coupon.imageUrl">-->
-<!--            </div>-->
-<!--            <div>-->
-<!--            <ion-label>-->
-<!--                <h4>Hasta {{coupon.endsAt.format("DD/MM/YYYY hh:mm")}}</h4>-->
-<!--                <h1>{{coupon.title}}</h1>-->
-<!--                <p>{{coupon.description}}</p>-->
-<!--            </ion-label>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </ion-card>-->
+    <!--    <ion-card (click)="viewDetail(coupon)" *ngFor="let coupon of couponService.coupons">-->
+    <!--        <div class="ion-no-padding ion-justify-content-between">-->
+    <!--            <div>-->
+    <!--            <img [src]="coupon.imageUrl">-->
+    <!--            </div>-->
+    <!--            <div>-->
+    <!--            <ion-label>-->
+    <!--                <h4>Hasta {{coupon.endsAt.format("DD/MM/YYYY hh:mm")}}</h4>-->
+    <!--                <h1>{{coupon.title}}</h1>-->
+    <!--                <p>{{coupon.description}}</p>-->
+    <!--            </ion-label>-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--    </ion-card>-->
 
     <ion-card *ngFor="let coupon of couponService.coupons"
-            class="ion-text-right"
+              class="ion-text-right"
               (click)="viewDetail(coupon)"
-            [ngStyle]="{ 'background-image': 'url(' +coupon.imageUrl + ')' }"
+              [ngStyle]="{ 'background-image': 'url(' +coupon.imageUrl + ')' }"
     >
-        <ion-card-header>
-            <ion-grid>
-                <ion-row class="ion-justify-content-start ion-align-items-center">
-                    <ion-col size="12">
-                        <div>
-                            <ion-label>
-<!--                                <label class="expiration-date">Hasta {{coupon.endsAt.format("DD/MM/YYYY hh:mm")}}</label>-->
-                                <h1>{{coupon.title}}</h1>
-                                <ion-card-subtitle><label>{{coupon.description}}</label></ion-card-subtitle>
-                            </ion-label>
+
+        <ion-grid class="ion-no-padding">
+            <ion-row class="ion-justify-content-start ion-align-items-center">
+                <ion-col size="12">
+                    <ion-card-header>
+                        <div class="ion-padding-right">
+                    <!-- <label class="expiration-date">Hasta {{coupon.endsAt.format("DD/MM/YYYY hh:mm")}}</label>-->
+                    <h1>{{coupon.title}}</h1>
+                    <ion-card-subtitle><label>{{coupon.description}}</label></ion-card-subtitle>
                         </div>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-card-header>
+                </ion-card-header>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+
     </ion-card>
 
 </ion-content>

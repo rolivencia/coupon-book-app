@@ -1,14 +1,20 @@
 ion-card{
   background-color: white;
   background-size: cover;
-  min-height: 160px;
+  height: 192px;
 
-  ion-label{
-    h1{
-      color: white;
-      font-size: 2rem;
-      margin-bottom: 0.75rem;
-    }
+  ion-grid, ion-row{
+    height: 100%;
+  }
+
+  h1{
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  ion-card-header{
+    padding: 12px;
   }
 
   ion-card-subtitle{
@@ -20,6 +26,7 @@ ion-card{
       font-family: "Open Sans Condensed";
       font-size: 1rem;
       line-height: 1.5rem;
+      font-weight: 500;
     }
   }
 }
