@@ -4,20 +4,21 @@
 
   <ion-card *ngIf="coupon">
 
-    <div class="ion-text-center">
+    <div class="ion-text-center ion-padding-top">
       <qrcode [qrdata]="couponCustomerCode"
-
               [level]="'M'"
       ></qrcode>
     </div>
 
     <div class="ion-text-center">
-      <ion-card-header class="ion-no-padding">
+
+      <ion-card-header class="ion-no-padding ion-margin-bottom">
         <ion-card-title class="ion-padding-vertical">{{coupon.code}} - {{this.authService.currentCustomer.id}}</ion-card-title>
         <ion-card-subtitle
         >{{'Vigente hasta el' }}<br> {{coupon.endsAt.format("DD") + " de " + coupon.endsAt.format("MMMM") + " de " + coupon.endsAt.format("YYYY") + " a las " + coupon.endsAt.format("HH:mm")}}</ion-card-subtitle
         >
       </ion-card-header>
+
       <ion-card-content>{{coupon.title}}. {{coupon.description}}. </ion-card-content>
     </div>
 
