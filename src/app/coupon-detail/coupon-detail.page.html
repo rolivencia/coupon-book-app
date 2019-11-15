@@ -11,22 +11,23 @@
       ></qrcode>
     </div>
 
-    <ion-card-header class="ion-no-padding">
-      <ion-card-title class="ion-text-center ion-padding-vertical">{{coupon.code}} - {{this.authService.currentCustomer.id}}</ion-card-title>
-      <ion-card-subtitle class="ion-text-center"
-      >{{'Vigente hasta el' }}<br> {{coupon.endsAt.format("DD") + " de " + coupon.endsAt.format("MMMM") + " de " + coupon.endsAt.format("YYYY") + " a las " + coupon.endsAt.format("HH:mm")}}</ion-card-subtitle
-      >
-    </ion-card-header>
-
+    <div class="ion-text-center">
+      <ion-card-header class="ion-no-padding">
+        <ion-card-title class="ion-padding-vertical">{{coupon.code}} - {{this.authService.currentCustomer.id}}</ion-card-title>
+        <ion-card-subtitle
+        >{{'Vigente hasta el' }}<br> {{coupon.endsAt.format("DD") + " de " + coupon.endsAt.format("MMMM") + " de " + coupon.endsAt.format("YYYY") + " a las " + coupon.endsAt.format("HH:mm")}}</ion-card-subtitle
+        >
+      </ion-card-header>
+    </div>
     <ion-card-content>{{coupon.title}}. {{coupon.description}}. </ion-card-content>
 
     <ion-button class="ion-margin"
                 expand="block"
                 [color]="themeService.currentTheme.backgroundColor === 'light' ? 'dark' : themeService.currentTheme.backgroundColor"
                 (click)="goBack()">
-      <ion-label *ngIf="!redeemed">{{buttonLabel}}</ion-label>
-      <ion-label color="success" *ngIf="redeemed">¡Ya canjeaste este cupón!</ion-label>
+      <ion-label >Volver</ion-label>
     </ion-button>
+
 
   </ion-card>
 </ion-content>
