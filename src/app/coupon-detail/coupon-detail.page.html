@@ -4,9 +4,9 @@
 
   <ion-card *ngIf="coupon">
 
-    <div class="">
+    <div class="ion-text-center">
       <qrcode [qrdata]="couponCustomerCode"
-              [size]="300"
+
               [level]="'M'"
       ></qrcode>
     </div>
@@ -18,8 +18,8 @@
         >{{'Vigente hasta el' }}<br> {{coupon.endsAt.format("DD") + " de " + coupon.endsAt.format("MMMM") + " de " + coupon.endsAt.format("YYYY") + " a las " + coupon.endsAt.format("HH:mm")}}</ion-card-subtitle
         >
       </ion-card-header>
+      <ion-card-content>{{coupon.title}}. {{coupon.description}}. </ion-card-content>
     </div>
-    <ion-card-content>{{coupon.title}}. {{coupon.description}}. </ion-card-content>
 
     <ion-button class="ion-margin"
                 expand="block"
