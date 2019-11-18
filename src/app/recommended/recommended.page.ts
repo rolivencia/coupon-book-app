@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { RecommendedService } from "@app/_services/recommended.service";
 
 @Component({
   selector: "app-recommended",
@@ -6,9 +7,14 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./recommended.page.scss"]
 })
 export class RecommendedPage {
-  constructor() {}
+
+
+  constructor(public recommendedService: RecommendedService) {}
 
   ionViewWillEnter() {
     console.log();
+    this.recommendedService.get().subscribe(result => {
+      this.recommendedService.recommended = result;
+    });
   }
 }

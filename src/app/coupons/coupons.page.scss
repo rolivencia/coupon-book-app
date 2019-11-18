@@ -1,7 +1,14 @@
 ion-card{
   background-color: white;
   background-size: cover;
-  height: 192px;
+  height: 180px;
+
+  .expiration-date{
+    padding: 2px;
+    background-color: rgba(0,0,0, 0.75);
+    color: white;
+    font-weight: 300;
+  }
 
   ion-grid, ion-row{
     height: 100%;
@@ -11,6 +18,11 @@ ion-card{
     color: white;
     font-size: 2rem;
     margin-bottom: 0.75rem;
+
+    padding: 0.25rem;
+    background-color: rgba(0,0,0, 0.75);
+    display:inline-block;
+    letter-spacing: 0.025rem;
   }
 
   ion-card-header{
@@ -18,7 +30,7 @@ ion-card{
   }
 
   ion-card-subtitle{
-    margin-bottom: 0.5rem;
+    //margin-bottom: 0.5rem;
     label{
       background-color: white;
       padding: 0.125rem;
@@ -26,7 +38,7 @@ ion-card{
       font-family: "Open Sans Condensed";
       font-size: 1rem;
       line-height: 1.5rem;
-      font-weight: 500;
+      font-weight: 400;
     }
   }
 }

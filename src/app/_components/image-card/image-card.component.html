@@ -1,5 +1,5 @@
 <ion-card
-  class="ion-padding-vertical ion-padding-left ion-text-right"
+  class="ion-padding-vertical ion-padding-left ion-text-right ion-justify-content-start ion-align-items-center"
   (click)="navigateTo(page.route)"
   [ngStyle]="{
     'background-image': 'url(/assets/img/' + page.id + '.jpg)',
@@ -8,19 +8,15 @@
 >
   <ion-card-header>
     <ion-grid>
-      <ion-row class="ion-justify-content-end ion-align-items-center">
-        <div>
-          <ion-card-subtitle *ngIf="page.subtitle"
-            ><label>{{ page.subtitle }}</label></ion-card-subtitle
-          >
-        </div>
-      </ion-row>
-      <ion-row class="ion-justify-content-start ion-align-items-start">
-        <ion-col size="2" class="ion-no-padding">
+      <ion-row class="ion-justify-content-start ion-align-items-center">
+        <ion-col size="1" class="ion-no-padding">
           <ion-icon *ngIf="page.icon" [name]="page.icon"></ion-icon>
         </ion-col>
-        <ion-col size="10" class="ion-no-padding">
+        <ion-col size="11" class="ion-no-padding">
           <div>
+            <ion-card-subtitle *ngIf="page.subtitle">
+              <label>{{ page.subtitle }}</label>
+            </ion-card-subtitle>
             <ion-card-title *ngIf="page.name">
               {{ page.name }}
             </ion-card-title>

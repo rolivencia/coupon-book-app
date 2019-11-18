@@ -7,6 +7,7 @@ import { IonicModule } from "@ionic/angular";
 
 import { RecommendedPage } from "./recommended.page";
 import { HeaderModule } from "@app/_components/header/header.module";
+import {ImageCardModule} from "@app/_components/image-card/image-card.module";
 
 const routes: Routes = [
   {
@@ -16,13 +17,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    HeaderModule,
-    IonicModule,
-    RouterModule.forChild(routes)
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        HeaderModule,
+        IonicModule,
+        RouterModule.forChild(routes),
+        ImageCardModule
+    ],
   declarations: [RecommendedPage]
 })
 export class RecommendedPageModule {}
