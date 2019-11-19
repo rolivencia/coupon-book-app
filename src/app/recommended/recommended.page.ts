@@ -13,7 +13,7 @@ export class RecommendedPage {
 
   ionViewWillEnter() {
     console.log();
-    this.recommendedService.get().subscribe(result => {
+    this.recommendedService.get(false, false).subscribe(result => {
       this.recommendedService.recommended = result;
     });
   }

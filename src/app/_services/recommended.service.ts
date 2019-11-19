@@ -15,9 +15,9 @@ export class RecommendedService {
 
   constructor(private http: HttpClient) {}
 
-  public get = (): Observable<Recommended[]> => {
+  public get = (showDisabled: false, showDeleted: false): Observable<Recommended[]> => {
     return this.http
-      .get<Recommended[]>(`${environment.apiUrl}/recommended/get`)
+      .get<Recommended[]>(`${environment.apiUrl}/recommended/get/${showDisabled}/${showDeleted}`)
       .pipe(
         map(recommendations =>
           recommendations.map(recommendation => ({
