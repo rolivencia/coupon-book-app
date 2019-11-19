@@ -43,7 +43,7 @@ export class ContactPage implements OnInit {
   }
 
   goToPhone() {
-    this.inAppBrowser.create("tel:+5493424226598");
+    this.inAppBrowser.create("tel:+543424226598");
   }
   goToWhatsapp() {
     this.inAppBrowser.create("https://wa.me/5493424226598");
