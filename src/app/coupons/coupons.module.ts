@@ -1,17 +1,21 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
-import { Routes, RouterModule } from "@angular/router";
+import {NgModule} from "@angular/core";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
+import {RouterModule, Routes} from "@angular/router";
 
-import { IonicModule } from "@ionic/angular";
+import {IonicModule} from "@ionic/angular";
 
-import { CouponsPage } from "./coupons.page";
-import { HeaderModule } from "../_components/header/header.module";
+import {CouponsPage} from "./coupons.page";
+import {HeaderModule} from "../_components/header/header.module";
+import {CouponsResolverService} from "@app/coupons/coupons-resolver.service";
 
 const routes: Routes = [
   {
     path: "",
-    component: CouponsPage
+    component: CouponsPage,
+    resolve: {
+      coupons: CouponsResolverService
+    }
   }
 ];
 
