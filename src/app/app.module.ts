@@ -14,6 +14,7 @@ import { AlertService } from "@app/_services/alert.service";
 import { ErrorInterceptor, JwtInterceptor } from "@app/_helpers";
 import { ThemeService } from "@app/_services/theme.service";
 import { HeaderModule } from "@app/_components/header/header.module";
+import { OneSignal } from "@ionic-native/onesignal/ngx";
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,6 +31,7 @@ import { HeaderModule } from "@app/_components/header/header.module";
     Facebook,
     GooglePlus,
     LoadingService,
+    OneSignal,
     StatusBar,
     SplashScreen,
     ThemeService,

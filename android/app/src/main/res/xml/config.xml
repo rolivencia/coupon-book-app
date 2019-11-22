@@ -8,9 +8,13 @@
   </feature>
 
 
-  <feature name="GooglePlus">
-    <param name="android-package" value="nl.xservices.plugins.GooglePlus"/>
-    <param name="onload" value="true"/>
+  <feature name="InAppBrowser">
+    <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
+  </feature>
+
+
+  <feature name="OneSignalPush">
+    <param name="android-package" value="com.plugin.gcm.OneSignalPush"/>
   </feature>
 
   </widget>

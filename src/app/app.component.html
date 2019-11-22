@@ -1,18 +1,25 @@
 <ion-app>
   <ion-split-pane>
     <ion-menu *ngIf="authService.loggedIn.value" type="overlay">
-      <app-header [title]="'Menú'" [menuVisible]="false" [profileVisible]="false"></app-header>
+      <app-header
+        [title]="'Menú'"
+        [menuVisible]="false"
+        [profileVisible]="false"
+      ></app-header>
       <ion-content>
-        <ion-list class="ion-no-padding">
+        <ion-list class="ion-no-padding ion-no-margin">
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
-                {{p.title}}
+                {{ p.title }}
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
+        <div>
+          <img [src]="'assets/img/side-menu.jpg'" />
+        </div>
       </ion-content>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>

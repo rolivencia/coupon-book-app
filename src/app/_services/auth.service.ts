@@ -1,24 +1,22 @@
-import { Injectable, NgZone } from "@angular/core";
-import { Platform } from "@ionic/angular";
+import {Injectable, NgZone} from "@angular/core";
+import {Platform} from "@ionic/angular";
 
-import { Facebook } from "@ionic-native/facebook/ngx";
+import {Facebook} from "@ionic-native/facebook/ngx";
 
-import { BehaviorSubject, Observable } from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import firebase from "@firebase/app";
 import "@firebase/auth";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "@environments/environment";
-import { Customer } from "@app/_models/customer";
-import { GooglePlus } from "@ionic-native/google-plus/ngx";
-import { LoadingService } from "@app/_services/loading.service";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "@environments/environment";
+import {Customer} from "@app/_models/customer";
+import {GooglePlus} from "@ionic-native/google-plus/ngx";
+import {LoadingService} from "@app/_services/loading.service";
 import { AlertService } from "@app/_services/alert.service";
-import { first } from "rxjs/operators";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
-
   private customerSubject: BehaviorSubject<Customer>;
   public customer: Observable<Customer>;
   public loggedWith: string = "";
@@ -66,19 +64,21 @@ export class AuthService {
     firebase.auth().onAuthStateChanged(firebaseUser => {
       this.zone.run(() => {
         firebaseUser ? this.loggedIn.next(true) : this.loggedIn.next(false);
-        if(firebaseUser){
-          this.loggedWith = firebaseUser.providerData ? firebaseUser.providerData[0].providerId : null;
+        if (firebaseUser) {
+          this.loggedWith = firebaseUser.providerData
+            ? firebaseUser.providerData[0].providerId
+            : null;
         }
       });
     });
   }
 
   facebookLogin(): void {
-    // if (this.platform.is("capacitor")) {
-    //   this.nativeFacebookAuth();
-    // } else {
+    if (this.platform.is("capacitor")) {
+      this.nativeFacebookAuth();
+    } else {
     this.browserFacebookAuth();
-    // }
+    }
   }
 
   googleLogin(): void {
@@ -152,9 +152,12 @@ export class AuthService {
 
   async browserFacebookAuth(): Promise<void> {
     const provider = new firebase.auth.FacebookAuthProvider();
-
+    console.log(provider);
     try {
       const result: any = await firebase.auth().signInWithPopup(provider);
+
+      console.log("RESULT FACEBOOK AUTH:");
+      console.log(result);
       const customer: Customer = {
         firstName: result.additionalUserInfo.profile.first_name,
         lastName: result.additionalUserInfo.profile.last_name,
@@ -196,11 +199,11 @@ export class AuthService {
     }
   }
 
-  errorHandler(err){
+  errorHandler(err) {
     if (err.code === "auth/account-exists-with-different-credential") {
       this.alertService.show(
-          "¡Error!",
-          "¡Vaya! Tu email ya está asociado a otra plataforma.\n\n Intentá ingresar con una de las otras dos opciones."
+        "¡Error!",
+        "¡Vaya! Tu email ya está asociado a otra plataforma.\n\n Intentá ingresar con una de las otras dos opciones."
       );
     } else {
       console.error(err);

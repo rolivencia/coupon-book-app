@@ -4,6 +4,7 @@ import { AuthService } from "./_services/auth.service";
 import { Platform } from "@ionic/angular";
 import { Component } from "@angular/core";
 import * as moment from 'moment';
+import {NotificationService} from "@app/_services/notification.service";
 
 @Component({
   selector: "app-root",
@@ -13,6 +14,7 @@ import * as moment from 'moment';
 export class AppComponent {
   constructor(
     public authService: AuthService,
+    private notificationService: NotificationService,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
@@ -55,6 +57,11 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      // Start the notification service
+      // if (this.platform.is('cordova')) {
+      //   this.notificationService.init();
+      // }
     });
   }
 }
