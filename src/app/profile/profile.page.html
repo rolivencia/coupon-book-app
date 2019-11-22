@@ -36,7 +36,7 @@
     <ion-card class="redeemed-coupon" *ngFor="let redeemedCoupon of redeemedCoupons" [ngStyle]="{'background-color': 'white'}">
 
       <ion-grid class="ion-no-padding">
-        <ion-row>
+        <ion-row class="ion-align-items-center">
           <ion-col size="3" class="ion-no-padding">
             <ion-thumbnail><img [src]="redeemedCoupon.coupon.imageUrl"></ion-thumbnail>
           </ion-col>
@@ -52,7 +52,6 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-
 
     </ion-card>
   </ion-card>

@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {RecommendedService} from "@app/_services/recommended.service";
-import {ActivatedRoute} from "@angular/router";
+import { Component } from "@angular/core";
+import { RecommendedService } from "@app/_services/recommended.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-recommended",
@@ -15,7 +15,9 @@ export class RecommendedPage {
 
   ionViewWillEnter() {
     if (this.route.snapshot.data["recommended"]) {
-      this.recommendedService.recommended = this.route.snapshot.data["recommended"];
+      this.recommendedService.recommended = this.route.snapshot.data[
+        "recommended"
+      ];
     }
   }
 }

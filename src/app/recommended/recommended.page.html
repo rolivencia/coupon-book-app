@@ -21,6 +21,11 @@
           </ion-card-header>
         </ion-col>
       </ion-row>
+      <ion-row class="info-row ion-justify-content-end" *ngIf="recommendation.info">
+        <div class="info-tag">
+          <h2>{{recommendation.info}}</h2>
+        </div>
+      </ion-row>
     </ion-grid>
   </ion-card>
 </ion-content>

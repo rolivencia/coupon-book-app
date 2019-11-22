@@ -1,6 +1,21 @@
 ion-card {
   background-size: cover;
 
+  .info-row{
+    margin-top: -15px;
+  }
+
+  .info-tag{
+    margin-right: 4px;
+    margin-bottom: 4px;
+    background-color: rgba(179, 183, 33, 0.75);
+    h2{
+      color: white;
+      margin: 4px;
+      font-size: 20px;
+    }
+  }
+
   ion-card-title, h1 {
     padding: 0.25rem;
     background-color: rgba(0,0,0, 0.75);

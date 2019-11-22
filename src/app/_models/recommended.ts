@@ -5,6 +5,7 @@ export class Recommended {
   title: string;
   description: string;
   imageUrl: string;
+  info?: string;
   audit: {
     createdAt: Moment;
     updatedAt: Moment;
