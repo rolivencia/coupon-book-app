@@ -1,5 +1,5 @@
 ion-card {
-  background-size: cover;
+  background-size: contain;
 
   .info-row{
     margin-top: -15px;
@@ -47,7 +47,7 @@ ion-card {
       padding: 0.125rem;
       color: black;
       font-family: "Open Sans Condensed";
-      line-height: 1.75rem;
+      line-height: 24px;
       font-weight: 500;
       font-size: 0.8rem;
     }
