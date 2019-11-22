@@ -11,9 +11,8 @@ app.use(cors());
 // global error handler
 // app.use(errorHandler);
 
-// Serve only the static files form the dist directory
+// Serve only the static files form the www directory
 app.use(express.static("./www"));
-
 
 app.get("*", function(req, res) {
   res.sendFile(path.join(__dirname, "/dist/index.html"));
