@@ -3,14 +3,14 @@
 <ion-content>
   <ion-card
     *ngFor="let recommendation of recommendedService.recommended"
-    class="ion-text-right"
+    class=""
     [ngStyle]="{ 'background-image': 'url(' +recommendation.imageUrl + ')' }"
   >
-    <ion-grid class="ion-no-padding">
+    <ion-grid>
       <ion-row class="ion-justify-content-start ion-align-items-center">
         <ion-col size="12">
           <ion-card-header>
-            <div class="ion-padding-right">
+            <div>
               <h1>{{recommendation.title}}</h1>
               <ion-card-subtitle
                 ><label
