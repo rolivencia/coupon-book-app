@@ -11,10 +11,26 @@ app.use(cors());
 // global error handler
 // app.use(errorHandler);
 
+const accessibleRoutes = [
+  "/",
+  "/home",
+  "/coupons",
+  "/login",
+  "/contact",
+  "/recommended",
+  "/profile",
+  "/register",
+  "/coupon-detail/:id"
+];
+
 // Serve only the static files form the www directory
 app.use(express.static("./www"));
 
 app.get("*", function(req, res) {
+  res.sendFile(path.join(__dirname, "/dist/index.html"));
+});
+
+app.get(accessibleRoutes, function(req, res) {
   res.sendFile(path.join(__dirname, "/dist/index.html"));
 });
 
