@@ -8,9 +8,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cors());
 
-// global error handler
-// app.use(errorHandler);
-
 const accessibleRoutes = [
   "/",
   "/home",
@@ -27,7 +24,7 @@ const accessibleRoutes = [
 app.use(express.static("./www"));
 
 app.get(accessibleRoutes, function(req, res) {
-  res.sendFile(path.join(__dirname, "/dist/index.html"));
+  res.sendFile(path.join(__dirname, "/www/index.html"));
 });
 
 // Start the app by listening on the default Heroku port
