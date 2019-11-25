@@ -4,15 +4,16 @@
   "engines": {
     "node": "12.9.1"
   },
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Turing Studio",
+  "homepage": "https://turingdevs.com/",
   "scripts": {
     "ng": "ng",
     "start": "nodemon server.js",
     "build": "ng build --aot --prod && npm run copy-onesignal",
     "build-test": "ng build",
-    "android-test": "npm run build-test && npx cap copy && npx cap open android",
-    "ios-test": "npm run build-test && npx cap copy && npx cap open ios",
+    "android-test": "ionic build && npx cap sync && npx cap open android",
+    "android-deploy": "ionic build --prod && npx cap sync && npx cap open android",
+    "ios-test": "ionic build && && npx cap sync && npx cap open ios",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -44,6 +45,7 @@
     "angularx-qrcode": "^1.7.0-beta.5",
     "body-parser": "^1.19.0",
     "cordova-plugin-facebook4": "6.2.0",
+    "cordova-plugin-googleplus": "8.2.0",
     "cordova-plugin-inappbrowser": "3.1.0",
     "core-js": "^2.5.4",
     "cors": "^2.8.5",
@@ -86,7 +88,7 @@
     "tslint": "~5.15.0",
     "typescript": "~3.4.3"
   },
-  "description": "An Ionic project",
+  "description": "BRUGGE - Bar & Biergarten",
   "cordova": {
     "plugins": {
       "cordova-plugin-inappbrowser": {},
@@ -94,7 +96,11 @@
         "APP_ID": "746577375785231",
         "APP_NAME": "Brugge"
       },
-      "onesignal-cordova-plugin": {}
+      "onesignal-cordova-plugin": {},
+      "cordova-plugin-googleplus": {
+        "REVERSED_CLIENT_ID": "apps.googleusercontent.com.169323504498-vggv4krnrvhut57qhjbr465taaen5g25",
+        "WEB_APPLICATION_CLIENT_ID": "169323504498-vggv4krnrvhut57qhjbr465taaen5g25.apps.googleusercontent.com"
+      }
     }
   }
 }

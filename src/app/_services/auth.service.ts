@@ -1,17 +1,18 @@
-import {Injectable, NgZone} from "@angular/core";
-import {Platform} from "@ionic/angular";
+import { Injectable, NgZone } from "@angular/core";
+import { Platform } from "@ionic/angular";
 
-import {Facebook} from "@ionic-native/facebook/ngx";
+import { Facebook } from "@ionic-native/facebook/ngx";
 
-import {BehaviorSubject, Observable} from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import firebase from "@firebase/app";
 import "@firebase/auth";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "@environments/environment";
-import {Customer} from "@app/_models/customer";
-import {GooglePlus} from "@ionic-native/google-plus/ngx";
-import {LoadingService} from "@app/_services/loading.service";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "@environments/environment";
+import { Customer } from "@app/_models/customer";
+import { GooglePlus } from "@ionic-native/google-plus/ngx";
+import { LoadingService } from "@app/_services/loading.service";
 import { AlertService } from "@app/_services/alert.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: "root"
@@ -32,7 +33,8 @@ export class AuthService {
     private facebook: Facebook,
     public httpClient: HttpClient,
     private google: GooglePlus,
-    private loadingService: LoadingService
+    private loadingService: LoadingService,
+    private router: Router
   ) {
     this.customerSubject = new BehaviorSubject<Customer>(
       JSON.parse(localStorage.getItem("customer"))
@@ -77,7 +79,7 @@ export class AuthService {
     if (this.platform.is("capacitor")) {
       this.nativeFacebookAuth();
     } else {
-    this.browserFacebookAuth();
+      this.browserFacebookAuth();
     }
   }
 
@@ -91,9 +93,16 @@ export class AuthService {
   async logout(): Promise<void> {
     if (this.platform.is("capacitor")) {
       try {
-        await this.facebook.logout(); // Unauth with Facebook
-        await this.google.logout(); // Unauth with Google
+
+        if(this.loggedWith === 'facebook'){
+          await this.facebook.logout(); // Unauth with Facebook
+        }
+        if(this.loggedWith === 'google'){
+          await this.google.logout(); // Unauth with Google
+        }
+
         await firebase.auth().signOut(); // Unauth with Firebase
+        this.router.navigate(["login"]);
       } catch (err) {
         this.loadingService.loading.dismiss();
         console.log(err);
@@ -101,6 +110,7 @@ export class AuthService {
     } else {
       try {
         await firebase.auth().signOut();
+        this.router.navigate(["login"]);
       } catch (err) {
         this.loadingService.loading.dismiss();
         console.error(err);
@@ -116,64 +126,63 @@ export class AuthService {
     try {
       const response = await this.facebook.login(["public_profile", "email"]);
 
-      console.log(response);
-
-      if (response.authResponse) {
-        // User is signed-in Facebook.
-        const unsubscribe = firebase.auth().onAuthStateChanged(firebaseUser => {
-          unsubscribe();
-          // Check if we are already signed-in Firebase with the correct user.
-          if (!this.isUserEqual(response.authResponse, firebaseUser)) {
-            // Build Firebase credential with the Facebook auth token.
-            const credential = firebase.auth.FacebookAuthProvider.credential(
-              response.authResponse.accessToken
-            );
-            // Sign in with the credential from the Facebook user.
-            firebase
-              .auth()
-              .signInWithCredential(credential)
-              .catch(error => {
-                console.log(error);
-              });
-            this.loggedIn.next(true);
-          } else {
-            // User is already signed-in Firebase with the correct user.
-            console.log("already signed in");
-          }
-        });
-      } else {
-        // User is signed-out of Facebook.
+      // User is signed-out of Facebook.
+      if (!response.authResponse) {
         firebase.auth().signOut();
       }
+
+      // User is signed-in Facebook.
+      const unsubscribe = firebase
+        .auth()
+        .onAuthStateChanged(async firebaseUser => {
+          unsubscribe();
+
+          // Check if we are already signed-in Firebase with the correct user.
+          if (!this.isUserEqual(response.authResponse, firebaseUser)) {
+            try {
+              // Build Firebase credential with the Facebook auth token.
+              const credential = firebase.auth.FacebookAuthProvider.credential(
+                response.authResponse.accessToken
+              );
+              // Sign in with the credential from the Facebook user.
+              const result: any = await firebase
+                .auth()
+                .signInWithCredential(credential);
+              this.logInSqlDatabase(result);
+              this.loggedIn.next(true);
+            } catch (err) {
+              this.errorHandler(err);
+            }
+          }
+        });
     } catch (err) {
-      console.log(err);
+      this.errorHandler(err);
     }
   }
-
   async browserFacebookAuth(): Promise<void> {
     const provider = new firebase.auth.FacebookAuthProvider();
-    console.log(provider);
     try {
       const result: any = await firebase.auth().signInWithPopup(provider);
-
-      console.log("RESULT FACEBOOK AUTH:");
-      console.log(result);
-      const customer: Customer = {
-        firstName: result.additionalUserInfo.profile.first_name,
-        lastName: result.additionalUserInfo.profile.last_name,
-        imageUrl: result.additionalUserInfo.profile.picture.data.url,
-        uidFirebase: result.additionalUserInfo.profile.id,
-        email: result.additionalUserInfo.profile.email
-      };
-      const sqlUser = await this.create(customer).toPromise();
-      localStorage.setItem("customer", JSON.stringify(sqlUser));
-      this.customerSubject.next(sqlUser);
-      this.loggedWith = "Facebook";
+      await this.logInSqlDatabase(result);
       this.loggedIn.next(true);
     } catch (err) {
       this.loadingService.loading.dismiss();
       this.errorHandler(err);
     }
+  }
+
+  async logInSqlDatabase(result) {
+    const customer: Customer = {
+      firstName: result.additionalUserInfo.profile.first_name,
+      lastName: result.additionalUserInfo.profile.last_name,
+      imageUrl: result.additionalUserInfo.profile.picture.data.url,
+      uidFirebase: result.additionalUserInfo.profile.id,
+      email: result.additionalUserInfo.profile.email
+    };
+    const sqlUser = await this.create(customer).toPromise();
+    localStorage.setItem("customer", JSON.stringify(sqlUser));
+    this.customerSubject.next(sqlUser);
+    this.loggedWith = "Facebook";
   }
 
   async googleAuth() {
@@ -200,10 +209,11 @@ export class AuthService {
   }
 
   errorHandler(err) {
+    this.loadingService.loading.dismiss();
     if (err.code === "auth/account-exists-with-different-credential") {
       this.alertService.show(
         "¡Error!",
-        "¡Vaya! Tu email ya está asociado a otra plataforma.\n\n Intentá ingresar con una de las otras dos opciones."
+        "¡Vaya! Tu email ya está asociado a otra plataforma.\n\n Intentá ingresar con la otra opción."
       );
     } else {
       console.error(err);
