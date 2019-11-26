@@ -12,7 +12,7 @@ import { Customer } from "@app/_models/customer";
 import { GooglePlus } from "@ionic-native/google-plus/ngx";
 import { LoadingService } from "@app/_services/loading.service";
 import { AlertService } from "@app/_services/alert.service";
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root"
@@ -84,20 +84,21 @@ export class AuthService {
   }
 
   googleLogin(): void {
-    this.googleAuth();
-  }
-  mailLogin(): void {
-    // this.mailAuth();
+    if (this.platform.is("android")) {
+      this.androidGoogleAuth();
+    } else if (this.platform.is("ios")) {
+    } else {
+      this.googleBrowserAuth();
+    }
   }
 
   async logout(): Promise<void> {
     if (this.platform.is("capacitor")) {
       try {
-
-        if(this.loggedWith === 'facebook'){
+        if (this.loggedWith === "Facebook") {
           await this.facebook.logout(); // Unauth with Facebook
         }
-        if(this.loggedWith === 'google'){
+        if (this.loggedWith === "Google") {
           await this.google.logout(); // Unauth with Google
         }
 
@@ -185,7 +186,7 @@ export class AuthService {
     this.loggedWith = "Facebook";
   }
 
-  async googleAuth() {
+  async googleBrowserAuth() {
     const provider = new firebase.auth.GoogleAuthProvider();
 
     try {
@@ -204,6 +205,32 @@ export class AuthService {
       this.loggedIn.next(true);
     } catch (err) {
       this.loadingService.loading.dismiss();
+      this.errorHandler(err);
+    }
+  }
+
+  async androidGoogleAuth() {
+    try {
+      const result = await this.google.login({
+        scopes: "",
+        webClientId:
+          "169323504498-vggv4krnrvhut57qhjbr465taaen5g25.apps.googleusercontent.com",
+        offline: true
+      });
+
+      const customer: Customer = {
+        firstName: result.givenName,
+        lastName: result.familyName,
+        imageUrl: result.imageUrl,
+        uidFirebase: result.userId,
+        email: result.email
+      };
+      const sqlUser = await this.create(customer).toPromise();
+      localStorage.setItem("customer", JSON.stringify(sqlUser));
+      this.customerSubject.next(sqlUser);
+      this.loggedWith = "Google";
+      this.loggedIn.next(true);
+    } catch (err) {
       this.errorHandler(err);
     }
   }
