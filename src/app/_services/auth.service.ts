@@ -1,18 +1,18 @@
-import { Injectable, NgZone } from "@angular/core";
-import { Platform } from "@ionic/angular";
+import {Injectable, NgZone} from "@angular/core";
+import {Platform} from "@ionic/angular";
 
-import { Facebook } from "@ionic-native/facebook/ngx";
+import {Facebook} from "@ionic-native/facebook/ngx";
 
-import { BehaviorSubject, Observable } from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import firebase from "@firebase/app";
 import "@firebase/auth";
-import { HttpClient } from "@angular/common/http";
-import { environment } from "@environments/environment";
-import { Customer } from "@app/_models/customer";
-import { GooglePlus } from "@ionic-native/google-plus/ngx";
-import { LoadingService } from "@app/_services/loading.service";
-import { AlertService } from "@app/_services/alert.service";
-import { Router } from "@angular/router";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "@environments/environment";
+import {Customer} from "@app/_models/customer";
+import {GooglePlus} from "@ionic-native/google-plus/ngx";
+import {LoadingService} from "@app/_services/loading.service";
+import {AlertService} from "@app/_services/alert.service";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: "root"
@@ -47,20 +47,8 @@ export class AuthService {
   }
 
   init(): void {
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-      apiKey: "AIzaSyAi2xsjCLF1UDSVzClwoqUWFWqHLeXxuFo",
-      authDomain: "brugge-f8811.firebaseapp.com",
-      databaseURL: "https://brugge-f8811.firebaseio.com",
-      projectId: "brugge-f8811",
-      storageBucket: "",
-      messagingSenderId: "287785352097",
-      appId: "1:287785352097:web:4de8ee41608bfb9fece9e0",
-      measurementId: "G-X18QJ9G9QC"
-    };
-
     // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    firebase.initializeApp(environment.firebaseConfig);
 
     // Emit logged in status whenever auth state changes
     firebase.auth().onAuthStateChanged(firebaseUser => {
@@ -84,9 +72,11 @@ export class AuthService {
   }
 
   googleLogin(): void {
-    if (this.platform.is("android")) {
-      this.androidGoogleAuth();
-    } else if (this.platform.is("ios")) {
+    if (this.platform.is("capacitor")) {
+      if (this.platform.is("android")) {
+        this.androidGoogleAuth();
+      } else if (this.platform.is("ios")) {
+      }
     } else {
       this.googleBrowserAuth();
     }
@@ -149,7 +139,7 @@ export class AuthService {
               const result: any = await firebase
                 .auth()
                 .signInWithCredential(credential);
-              this.logInSqlDatabase(result);
+              await this.logInSqlDatabase(result, "Facebook");
               this.loggedIn.next(true);
             } catch (err) {
               this.errorHandler(err);
@@ -164,7 +154,7 @@ export class AuthService {
     const provider = new firebase.auth.FacebookAuthProvider();
     try {
       const result: any = await firebase.auth().signInWithPopup(provider);
-      await this.logInSqlDatabase(result);
+      await this.logInSqlDatabase(result, "Facebook");
       this.loggedIn.next(true);
     } catch (err) {
       this.loadingService.loading.dismiss();
@@ -172,18 +162,26 @@ export class AuthService {
     }
   }
 
-  async logInSqlDatabase(result) {
+  async logInSqlDatabase(result, loggedWith: string) {
     const customer: Customer = {
-      firstName: result.additionalUserInfo.profile.first_name,
-      lastName: result.additionalUserInfo.profile.last_name,
-      imageUrl: result.additionalUserInfo.profile.picture.data.url,
-      uidFirebase: result.additionalUserInfo.profile.id,
+      firstName: result.additionalUserInfo.profile.first_name
+        ? result.additionalUserInfo.profile.first_name
+        : result.additionalUserInfo.profile.given_name,
+      lastName: result.additionalUserInfo.profile.last_name
+        ? result.additionalUserInfo.profile.last_name
+        : result.additionalUserInfo.profile.family_name,
+      imageUrl: result.additionalUserInfo.profile.picture.data
+        ? result.additionalUserInfo.profile.picture.data.url
+        : result.additionalUserInfo.profile.picture,
+      uidFirebase: result.additionalUserInfo.profile.id
+        ? result.additionalUserInfo.profile.id
+        : result.additionalUserInfo.profile.sub,
       email: result.additionalUserInfo.profile.email
     };
     const sqlUser = await this.create(customer).toPromise();
     localStorage.setItem("customer", JSON.stringify(sqlUser));
     this.customerSubject.next(sqlUser);
-    this.loggedWith = "Facebook";
+    this.loggedWith = loggedWith;
   }
 
   async googleBrowserAuth() {
@@ -191,17 +189,7 @@ export class AuthService {
 
     try {
       const result: any = await firebase.auth().signInWithPopup(provider);
-      const customer: Customer = {
-        firstName: result.additionalUserInfo.profile.given_name,
-        lastName: result.additionalUserInfo.profile.family_name,
-        imageUrl: result.additionalUserInfo.profile.picture,
-        uidFirebase: result.additionalUserInfo.profile.id,
-        email: result.additionalUserInfo.profile.email
-      };
-      const sqlUser = await this.create(customer).toPromise();
-      localStorage.setItem("customer", JSON.stringify(sqlUser));
-      this.customerSubject.next(sqlUser);
-      this.loggedWith = "Google";
+      await this.logInSqlDatabase(result, "Google");
       this.loggedIn.next(true);
     } catch (err) {
       this.loadingService.loading.dismiss();
@@ -211,29 +199,51 @@ export class AuthService {
 
   async androidGoogleAuth() {
     try {
-      const result = await this.google.login({
+      const response = await this.google.login({
         scopes: "",
         webClientId:
           "169323504498-vggv4krnrvhut57qhjbr465taaen5g25.apps.googleusercontent.com",
         offline: true
       });
+      const { idToken, accessToken } = response;
+      const credential = accessToken
+        ? firebase.auth.GoogleAuthProvider.credential(idToken, accessToken)
+        : firebase.auth.GoogleAuthProvider.credential(idToken);
 
-      const customer: Customer = {
-        firstName: result.givenName,
-        lastName: result.familyName,
-        imageUrl: result.imageUrl,
-        uidFirebase: result.userId,
-        email: result.email
-      };
-      const sqlUser = await this.create(customer).toPromise();
-      localStorage.setItem("customer", JSON.stringify(sqlUser));
-      this.customerSubject.next(sqlUser);
-      this.loggedWith = "Google";
+      // Sign in with the credential from the Google user.
+      const result = await firebase.auth().signInWithCredential(credential);
+      await this.logInSqlDatabase(result, "Google");
       this.loggedIn.next(true);
     } catch (err) {
       this.errorHandler(err);
     }
   }
+
+  // async androidGoogleAuth() {
+  //   try {
+  //     const result = await this.google.login({
+  //       scopes: "",
+  //       webClientId:
+  //           "169323504498-vggv4krnrvhut57qhjbr465taaen5g25.apps.googleusercontent.com",
+  //       offline: true
+  //     });
+  //
+  //     const customer: Customer = {
+  //       firstName: result.givenName,
+  //       lastName: result.familyName,
+  //       imageUrl: result.imageUrl,
+  //       uidFirebase: result.userId,
+  //       email: result.email
+  //     };
+  //     const sqlUser = await this.create(customer).toPromise();
+  //     localStorage.setItem("customer", JSON.stringify(sqlUser));
+  //     this.customerSubject.next(sqlUser);
+  //     this.loggedWith = "Google";
+  //     this.loggedIn.next(true);
+  //   } catch (err) {
+  //     this.errorHandler(err);
+  //   }
+  // }
 
   errorHandler(err) {
     this.loadingService.loading.dismiss();
