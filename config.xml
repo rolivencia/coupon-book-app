@@ -2,7 +2,7 @@
 <widget id="com.turingstudio.brugge" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>BRUGGE</name>
     <description>Brugge Bar &amp; Biergarten app</description>
-    <author email="hi@ionicframework.com" href="http://ionicframework.com/">Brugge</author>
+    <author email="hi@ionicframework.com" href="http://ionicframework.com/">BRUGGE</author>
     <content src="index.html" />
     <access origin="*" />
     <access launch-external="yes" origin="whatsapp://*/*" />

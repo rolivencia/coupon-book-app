@@ -54,9 +54,20 @@ export class ContactPage implements OnInit {
     }
   }
   goToInstagram() {
-    this.inAppBrowser.create("https://www.instagram.com/brugge.bar.biergarten");
+    if (this.platform.is("android")) {
+      window.open("https://www.instagram.com/brugge.bar.biergarten", "_system");
+    } else {
+      this.inAppBrowser.create(
+        "https://www.instagram.com/brugge.bar.biergarten"
+      );
+    }
   }
   goToMessenger() {
-    this.inAppBrowser.create("https://www.messenger.com/t/133638847237731");
+    if (this.platform.is("android")) {
+      window.open("https://www.messenger.com/t/133638847237731", "_system");
+    } else {
+      this.inAppBrowser.create("https://www.messenger.com/t/133638847237731");
+
+    }
   }
 }
