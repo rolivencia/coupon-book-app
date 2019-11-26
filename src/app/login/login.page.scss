@@ -1,7 +1,14 @@
 ion-content{
   //--background: url("/assets/img/background-login.png") 50% 0;
-  .container{
+  #container{
+    --overflow: hidden;
     height: 100%;
+    @media(max-height: 768px){
+      background-size: 100%;
+    }
+    @media(min-height: 769px){
+      background-size: 100% 100%;
+    }
     ion-img{
       display: inline;
     }

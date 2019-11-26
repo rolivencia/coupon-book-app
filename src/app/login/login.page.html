@@ -1,8 +1,7 @@
 <app-header [title]="'Iniciar Sesión'" [profileVisible]="false" [menuVisible]="false"></app-header>
 
 <ion-content class="ion-align-items-center">
-  <div class="container" [ngStyle]="{'background-color': this.themeService.currentTheme.hexBackgroundColor}">
-    <img [src]="'assets/img/background-login.jpg'">
+  <div id="container" [ngStyle]="{ 'background-image': 'url(assets/img/background-login.jpg)' }">
   </div>
 </ion-content>
 
