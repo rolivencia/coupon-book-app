@@ -59,9 +59,9 @@ export class AppComponent {
       this.splashScreen.hide();
 
       // Start the notification service
-      // if (this.platform.is('cordova')) {
-      //   this.notificationService.init();
-      // }
+      if (this.platform.is('cordova')) {
+        this.notificationService.init();
+      }
     });
   }
 }
