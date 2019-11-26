@@ -10,16 +10,16 @@ import { Platform } from "@ionic/angular";
 })
 export class ContactPage implements OnInit {
   pages = [
-    { id: "telephone", name: "", subtitle: "", route: "/profile" },
-    { id: "whatsapp", name: "", subtitle: "", route: "/coupons", icon: "" },
+    { id: "telephone", name: "", subtitle: "", route: "" },
+    { id: "whatsapp", name: "", subtitle: "", route: "", icon: "" },
     {
       id: "instagram",
       name: "",
       subtitle: "",
-      route: "/recommended",
+      route: "",
       icon: ""
     },
-    { id: "facebook", name: "", subtitle: "", route: "/contact", icon: "" }
+    { id: "facebook", name: "", subtitle: "", route: "", icon: "" }
   ];
 
   constructor(private inAppBrowser: InAppBrowser, private platform: Platform) {}
