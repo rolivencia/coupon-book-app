@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.turingstudio.brugge" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Brugge</name>
+    <name>BRUGGE</name>
     <description>Brugge Bar &amp; Biergarten app</description>
     <author email="hi@ionicframework.com" href="http://ionicframework.com/">Brugge</author>
     <content src="index.html" />
     <access origin="*" />
-    <access origin="whatsapp:*" launch-external="yes" />
+    <access launch-external="yes" origin="whatsapp://*/*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="whatsapp://*/*" />

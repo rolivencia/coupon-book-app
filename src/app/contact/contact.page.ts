@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { InAppBrowser } from "@ionic-native/in-app-browser/ngx";
+import { Platform } from "@ionic/angular";
 
 @Component({
   selector: "app-contact",
@@ -21,7 +22,7 @@ export class ContactPage implements OnInit {
     { id: "facebook", name: "", subtitle: "", route: "/contact", icon: "" }
   ];
 
-  constructor(private inAppBrowser: InAppBrowser) {}
+  constructor(private inAppBrowser: InAppBrowser, private platform: Platform) {}
 
   ngOnInit() {}
 
@@ -46,7 +47,11 @@ export class ContactPage implements OnInit {
     this.inAppBrowser.create("tel:+543424226598");
   }
   goToWhatsapp() {
-    this.inAppBrowser.create("https://wa.me/5493424226598");
+    if (this.platform.is("android")) {
+      window.open('whatsapp://send?phone=5493424226598"', "_system");
+    } else {
+      this.inAppBrowser.create("https://wa.me/5493424226598");
+    }
   }
   goToInstagram() {
     this.inAppBrowser.create("https://www.instagram.com/brugge.bar.biergarten");
