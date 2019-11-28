@@ -30,6 +30,7 @@
           *ngIf="!registrationFormVisible && phone"
           (click)="getCode()"
           class="ion-margin-top"
+          [color]="themeService.currentTheme.backgroundColor"
           expand="block"
           >Recibir código de verificación</ion-button
         >
@@ -37,6 +38,7 @@
           *ngIf="registrationFormVisible"
           class="ion-margin-top"
           expand="block"
+          [color]="themeService.currentTheme.backgroundColor"
           (click)="resetPhone()"
           >Volver a ingresar teléfono</ion-button
         >
@@ -44,7 +46,7 @@
     </ion-card-content>
   </ion-card>
 
-<!--  <ion-card color="light" *ngIf="registrationFormVisible">-->
+  <!--  <ion-card color="light" *ngIf="registrationFormVisible">-->
   <ion-card color="light" *ngIf="registrationFormVisible">
     <ion-card-content>
       <form (ngSubmit)="register()">
@@ -84,6 +86,7 @@
           type="submit"
           class="ion-margin-top"
           expand="block"
+          [color]="themeService.currentTheme.backgroundColor"
           >{{alreadyRegistered ? 'Ingresar' : 'Registrarse'}}</ion-button
         >
       </form>

@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { AuthService } from "@app/_services/auth.service";
 import { CustomerService } from "@app/_services/customer.service";
 import { first } from "rxjs/operators";
+import { ThemeService } from "@app/_services/theme.service";
 
 @Component({
   selector: "app-register",
@@ -22,7 +23,8 @@ export class RegisterPage {
 
   constructor(
     private authService: AuthService,
-    private customerService: CustomerService
+    private customerService: CustomerService,
+    public themeService: ThemeService
   ) {}
 
   ionViewDidEnter() {
