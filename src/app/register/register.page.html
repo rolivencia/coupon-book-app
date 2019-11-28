@@ -1,9 +1,94 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>register</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header [title]="'Registrarse'"></app-header>
 
 <ion-content>
+  <ion-card color="light">
+    <ion-card-content>
+      <ion-label
+        >Ingresá tu número de teléfono, con característica y código de área, sin
+        símbolos ni separadores. Para Santa Fe: 54342XXXXXX</ion-label
+      >
+    </ion-card-content>
+  </ion-card>
 
+  <ion-card color="light">
+    <ion-card-content>
+      <form (ngSubmit)="getCode()">
+        <ion-item>
+          <ion-label><strong>Teléfono</strong></ion-label>
+          <ion-input
+            [disabled]="registrationFormVisible"
+            type="tel"
+            pattern="\d*"
+            required
+            name="email"
+            placeholder="54342"
+            [(ngModel)]="phone"
+          ></ion-input>
+        </ion-item>
+
+        <ion-button
+          *ngIf="!registrationFormVisible && phone"
+          (click)="getCode()"
+          class="ion-margin-top"
+          expand="block"
+          >Recibir código de verificación</ion-button
+        >
+        <ion-button
+          *ngIf="registrationFormVisible"
+          class="ion-margin-top"
+          expand="block"
+          (click)="resetPhone()"
+          >Volver a ingresar teléfono</ion-button
+        >
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+<!--  <ion-card color="light" *ngIf="registrationFormVisible">-->
+  <ion-card color="light" *ngIf="registrationFormVisible">
+    <ion-card-content>
+      <form (ngSubmit)="register()">
+        <ng-container *ngIf="!alreadyRegistered">
+          <ion-item>
+            <ion-label><strong>Nombre:</strong></ion-label>
+            <ion-input
+              required
+              type="text"
+              name="firstName"
+              [disabled]="alreadyRegistered"
+              [(ngModel)]="firstName"
+            ></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label><strong>Apellido:</strong></ion-label>
+            <ion-input
+              required
+              type="text"
+              name="lastName"
+              [disabled]="alreadyRegistered"
+              [(ngModel)]="lastName"
+            ></ion-input>
+          </ion-item>
+        </ng-container>
+        <ion-item>
+          <ion-label><strong>Código de verificación:</strong></ion-label>
+          <ion-input
+            type="text"
+            name="verification"
+            [(ngModel)]="verificationCode"
+          ></ion-input>
+        </ion-item>
+        <ion-button
+          id="brugge-register-button"
+          type="submit"
+          class="ion-margin-top"
+          expand="block"
+          >{{alreadyRegistered ? 'Ingresar' : 'Registrarse'}}</ion-button
+        >
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <div id="recaptcha-verifier"></div>
 </ion-content>

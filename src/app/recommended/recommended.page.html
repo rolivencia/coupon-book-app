@@ -3,7 +3,7 @@
 <ion-content>
   <ion-card
     *ngFor="let recommendation of recommendedService.recommended"
-    class=""
+    class="ion-activatable"
     [ngStyle]="{ 'background-image': 'url(' +recommendation.imageUrl + ')' }"
   >
     <ion-grid>
@@ -27,5 +27,6 @@
         </div>
       </ion-row>
     </ion-grid>
+    <ion-ripple-effect></ion-ripple-effect>
   </ion-card>
 </ion-content>

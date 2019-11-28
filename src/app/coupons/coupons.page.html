@@ -4,6 +4,7 @@
 
     <ion-card *ngFor="let coupon of couponService.coupons"
               (click)="viewDetail(coupon)"
+              class="ion-activatable"
     >
 
         <ion-grid class="ion-no-padding">
@@ -19,7 +20,7 @@
                 </ion-col>
             </ion-row>
         </ion-grid>
-
+        <ion-ripple-effect></ion-ripple-effect>
     </ion-card>
 
 </ion-content>

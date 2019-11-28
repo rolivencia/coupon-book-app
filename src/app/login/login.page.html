@@ -8,29 +8,27 @@
 <ion-footer [ngStyle]="{'background-color': this.themeService.currentTheme.hexBackgroundColor}">
   <div class="ion-padding">
     
-    <ion-button color="secondary" expand="block" (click)="login('facebook')">
-      <ion-icon color="light"name="logo-facebook"></ion-icon>
-      <ion-label color="light">Iniciar con Facebook</ion-label>
-    </ion-button>
-    
-    <ion-button
-      class="ion-margin-top"
-      color="danger"
-      expand="block"
-      (click)="login('google')"
-    >
-      <ion-icon color="light" name="logo-google"></ion-icon>
-      <ion-label color="light">Iniciar con Google</ion-label>
-    </ion-button>
+<!--    <ion-button color="secondary" expand="block" (click)="login('facebook')">-->
+<!--      <ion-icon color="light"name="logo-facebook"></ion-icon>-->
+<!--      <ion-label color="light">Iniciar con Facebook</ion-label>-->
+<!--    </ion-button>-->
+<!--    -->
+<!--    <ion-button-->
+<!--      class="ion-margin-top"-->
+<!--      color="danger"-->
+<!--      expand="block"-->
+<!--      (click)="login('google')"-->
+<!--    >-->
+<!--      <ion-icon color="light" name="logo-google"></ion-icon>-->
+<!--      <ion-label color="light">Iniciar con Google</ion-label>-->
+<!--    </ion-button>-->
     <!-- TODO: Release 2 - Evaluar qué hacer con el login vía correo -->
-    <!--    <ion-button fill="solid"-->
-    <!--      class="ion-margin-top"-->
-    <!--      [color]=" themeService.currentTheme.backgroundColor !== 'dark' ? 'dark' : 'tertiary'"-->
-    <!--      expand="block"-->
-    <!--      (click)="login('mail')"-->
-    <!--    >-->
-    <!--      <ion-icon color="light" name="mail"></ion-icon>-->
-    <!--      <ion-label class="ion-padding-left" color="light">Iniciar con eMail</ion-label>-->
-    <!--    </ion-button>-->
+        <ion-button fill="solid"
+          [color]=" themeService.currentTheme.backgroundColor !== 'dark' ? 'dark' : 'tertiary'"
+          expand="block"
+          (click)="login('phone')"
+        >
+          <ion-label class="ion-padding-left" color="light">Ingresar</ion-label>
+        </ion-button>
   </div>
 </ion-footer>

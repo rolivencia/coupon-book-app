@@ -1,5 +1,5 @@
 <ion-card
-  class="ion-padding-vertical ion-padding-left ion-text-right ion-justify-content-start ion-align-items-center"
+  class="ion-padding-vertical ion-padding-left ion-text-right ion-justify-content-start ion-align-items-center ion-activatable"
   (click)="navigateTo(page.route)"
   [ngStyle]="{
     'background-image': 'url(/assets/img/' + page.id + '.jpg)',
@@ -25,4 +25,5 @@
       </ion-row>
     </ion-grid>
   </ion-card-header>
+  <ion-ripple-effect></ion-ripple-effect>
 </ion-card>

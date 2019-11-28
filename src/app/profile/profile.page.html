@@ -6,12 +6,12 @@
 
     <ion-grid >
       <ion-row class="ion-justify-content-start">
-        <ion-col size="3">
+        <ion-col size="3" *ngIf="authService.currentCustomer.imageUrl">
           <ion-avatar>
             <img [src]="authService.currentCustomer.imageUrl" />
           </ion-avatar>
         </ion-col>
-        <ion-col size="9">
+        <ion-col [size]="authService.currentCustomer.imageUrl ? 9 : 12">
           <ion-card-header>
             <ion-card-subtitle>Perfil de Usuario</ion-card-subtitle>
             <ion-card-title>{{authService.currentCustomer.firstName + " " + authService.currentCustomer.lastName}}</ion-card-title>
@@ -21,15 +21,18 @@
     </ion-grid>
 
     <ion-card-content>
-      <p><strong>Email: </strong>{{authService.currentCustomer.email}}</p>
-      <p><strong>Plataforma: </strong>{{generatePlatformInfo(authService.loggedWith)}}</p>
+<!--      <p><strong>Email: </strong>{{authService.currentCustomer.email}}</p>-->
+      <p [ngClass]="{'ion-padding-left': !authService.currentCustomer.imageUrl }">
+        <strong>Teléfono: </strong>{{authService.currentCustomer.email}}
+      </p>
+<!--      <p><strong>Plataforma: </strong>{{generatePlatformInfo(authService.loggedWith)}}</p>-->
     </ion-card-content>
 
   </ion-card>
 
   <ion-card *ngIf="loaded" [ngStyle]="{'background-color': themeService.currentTheme.hexBackgroundColor}">
 
-    <ion-card-header >
+    <ion-card-header class="ion-text-center">
       <ion-card-title [ngStyle]="{'color': themeService.currentTheme.color}">{{redeemedCoupons.length ? 'Últimos canjes:' : '¡Todavía no hiciste ningún canje!' }}</ion-card-title>
     </ion-card-header>
     

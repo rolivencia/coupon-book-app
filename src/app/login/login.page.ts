@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { NavController, LoadingController } from "@ionic/angular";
-import { AuthService } from "../_services/auth.service";
-import { LoadingService } from "@app/_services/loading.service";
+import {Component, OnInit} from "@angular/core";
+import {NavController} from "@ionic/angular";
+import {AuthService} from "../_services/auth.service";
+import {LoadingService} from "@app/_services/loading.service";
 import {ThemeService} from "@app/_services/theme.service";
 
 @Component({
@@ -41,19 +41,24 @@ export class LoginPage implements OnInit {
   }
 
   async login(platform: string = "facebook") {
-    await this.loadingService.showLoading();
+    // await this.loadingService.showLoading();
     switch (platform) {
       case "facebook":
-        this.authService.facebookLogin();
+        // this.authService.facebookLogin();
         break;
       case "google":
-        this.authService.googleLogin();
+        // this.authService.googleLogin();
         break;
-      case "mail":
+      case "phone":
+        this.navCtrl.navigateForward("/register");
         break;
       default:
         break;
     }
+  }
+
+  register(){
+
   }
 
 

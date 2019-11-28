@@ -1,26 +1,30 @@
-import {Injectable, NgZone} from "@angular/core";
-import {Platform} from "@ionic/angular";
-
-import {Facebook} from "@ionic-native/facebook/ngx";
-
-import {BehaviorSubject, Observable} from "rxjs";
+import { Injectable, NgZone } from "@angular/core";
+import { Platform } from "@ionic/angular";
+import { Facebook } from "@ionic-native/facebook/ngx";
+import { BehaviorSubject, Observable } from "rxjs";
 import firebase from "@firebase/app";
 import "@firebase/auth";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "@environments/environment";
-import {Customer} from "@app/_models/customer";
-import {GooglePlus} from "@ionic-native/google-plus/ngx";
-import {LoadingService} from "@app/_services/loading.service";
-import {AlertService} from "@app/_services/alert.service";
-import {Router} from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "@environments/environment";
+import { Customer } from "@app/_models/customer";
+import { LoadingService } from "@app/_services/loading.service";
+import { AlertService } from "@app/_services/alert.service";
+import { Router } from "@angular/router";
+import { CustomerService } from "@app/_services/customer.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class AuthService {
   private customerSubject: BehaviorSubject<Customer>;
+  public verificationId: string = "";
+
   public customer: Observable<Customer>;
   public loggedWith: string = "";
+
+  public verificationCodeSent: BehaviorSubject<boolean> = new BehaviorSubject<
+    boolean
+  >(false);
 
   public loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
@@ -28,11 +32,12 @@ export class AuthService {
 
   constructor(
     private alertService: AlertService,
+    private customerService: CustomerService,
     private platform: Platform,
     private zone: NgZone,
-    private facebook: Facebook,
+
     public httpClient: HttpClient,
-    private google: GooglePlus,
+
     private loadingService: LoadingService,
     private router: Router
   ) {
@@ -44,6 +49,15 @@ export class AuthService {
 
   public get currentCustomer(): Customer {
     return this.customerSubject.value;
+  }
+
+  getVerificationCaptcha() {
+    return new firebase.auth.RecaptchaVerifier("recaptcha-verifier", {
+      size: "invisible",
+      callback: response => {
+        console.log("got captcha!");
+      }
+    });
   }
 
   init(): void {
@@ -63,22 +77,49 @@ export class AuthService {
     });
   }
 
-  facebookLogin(): void {
-    if (this.platform.is("capacitor")) {
-      this.nativeFacebookAuth();
-    } else {
-      this.browserFacebookAuth();
+  async getSmsVerificationCode(phoneNumber: string, captcha: any) {
+    this.loadingService.showLoading();
+    try {
+      const result = await firebase
+        .auth()
+        .signInWithPhoneNumber(phoneNumber, captcha);
+      if (result) {
+        this.verificationCodeSent.next(true);
+        this.verificationId = result.verificationId;
+      }
+      this.loadingService.loading.dismiss();
+    } catch (err) {
+      this.loadingService.loading.dismiss();
+      this.errorHandler(err);
     }
   }
 
-  googleLogin(): void {
-    if (this.platform.is("capacitor")) {
-      if (this.platform.is("android")) {
-        this.androidGoogleAuth();
-      } else if (this.platform.is("ios")) {
-      }
-    } else {
-      this.googleBrowserAuth();
+  async smsAuth(userInfo: any, verificationId: string, code: string) {
+    this.loadingService.showLoading();
+    try {
+      const credential = await firebase.auth.PhoneAuthProvider.credential(
+        verificationId,
+        code
+      );
+
+      const result: any = await firebase
+        .auth()
+        .signInWithCredential(credential);
+
+      const customer = await this.customerService.logInSqlDatabase(
+        result,
+        "SMS",
+        userInfo
+      );
+
+      this.customerSubject.next(customer);
+      this.loggedWith = "SMS";
+
+      this.loggedIn.next(true);
+      this.loadingService.loading.dismiss();
+    } catch (err) {
+      this.loadingService.loading.dismiss();
+      this.errorHandler(err);
     }
   }
 
@@ -86,12 +127,11 @@ export class AuthService {
     if (this.platform.is("capacitor")) {
       try {
         if (this.loggedWith === "Facebook") {
-          await this.facebook.logout(); // Unauth with Facebook
+          // this.authFacebook.logout(); // Unauth with Facebook
         }
         if (this.loggedWith === "Google") {
-          await this.google.logout(); // Unauth with Google
+          // this.authGoogle.logout(); // Unauth with Google
         }
-
         await firebase.auth().signOut(); // Unauth with Firebase
         this.router.navigate(["login"]);
       } catch (err) {
@@ -113,138 +153,6 @@ export class AuthService {
     this.customerSubject.next(null);
   }
 
-  async nativeFacebookAuth(): Promise<void> {
-    try {
-      const response = await this.facebook.login(["public_profile", "email"]);
-
-      // User is signed-out of Facebook.
-      if (!response.authResponse) {
-        firebase.auth().signOut();
-      }
-
-      // User is signed-in Facebook.
-      const unsubscribe = firebase
-        .auth()
-        .onAuthStateChanged(async firebaseUser => {
-          unsubscribe();
-
-          // Check if we are already signed-in Firebase with the correct user.
-          if (!this.isUserEqual(response.authResponse, firebaseUser)) {
-            try {
-              // Build Firebase credential with the Facebook auth token.
-              const credential = firebase.auth.FacebookAuthProvider.credential(
-                response.authResponse.accessToken
-              );
-              // Sign in with the credential from the Facebook user.
-              const result: any = await firebase
-                .auth()
-                .signInWithCredential(credential);
-              await this.logInSqlDatabase(result, "Facebook");
-              this.loggedIn.next(true);
-            } catch (err) {
-              this.errorHandler(err);
-            }
-          }
-        });
-    } catch (err) {
-      this.errorHandler(err);
-    }
-  }
-  async browserFacebookAuth(): Promise<void> {
-    const provider = new firebase.auth.FacebookAuthProvider();
-    try {
-      const result: any = await firebase.auth().signInWithPopup(provider);
-      await this.logInSqlDatabase(result, "Facebook");
-      this.loggedIn.next(true);
-    } catch (err) {
-      this.loadingService.loading.dismiss();
-      this.errorHandler(err);
-    }
-  }
-
-  async logInSqlDatabase(result, loggedWith: string) {
-    const customer: Customer = {
-      firstName: result.additionalUserInfo.profile.first_name
-        ? result.additionalUserInfo.profile.first_name
-        : result.additionalUserInfo.profile.given_name,
-      lastName: result.additionalUserInfo.profile.last_name
-        ? result.additionalUserInfo.profile.last_name
-        : result.additionalUserInfo.profile.family_name,
-      imageUrl: result.additionalUserInfo.profile.picture.data
-        ? result.additionalUserInfo.profile.picture.data.url
-        : result.additionalUserInfo.profile.picture,
-      uidFirebase: result.additionalUserInfo.profile.id
-        ? result.additionalUserInfo.profile.id
-        : result.additionalUserInfo.profile.sub,
-      email: result.additionalUserInfo.profile.email
-    };
-    const sqlUser = await this.create(customer).toPromise();
-    localStorage.setItem("customer", JSON.stringify(sqlUser));
-    this.customerSubject.next(sqlUser);
-    this.loggedWith = loggedWith;
-  }
-
-  async googleBrowserAuth() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-
-    try {
-      const result: any = await firebase.auth().signInWithPopup(provider);
-      await this.logInSqlDatabase(result, "Google");
-      this.loggedIn.next(true);
-    } catch (err) {
-      this.loadingService.loading.dismiss();
-      this.errorHandler(err);
-    }
-  }
-
-  async androidGoogleAuth() {
-    try {
-      const response = await this.google.login({
-        scopes: "",
-        webClientId:
-          "169323504498-vggv4krnrvhut57qhjbr465taaen5g25.apps.googleusercontent.com",
-        offline: true
-      });
-      const { idToken, accessToken } = response;
-      const credential = accessToken
-        ? firebase.auth.GoogleAuthProvider.credential(idToken, accessToken)
-        : firebase.auth.GoogleAuthProvider.credential(idToken);
-
-      // Sign in with the credential from the Google user.
-      const result = await firebase.auth().signInWithCredential(credential);
-      await this.logInSqlDatabase(result, "Google");
-      this.loggedIn.next(true);
-    } catch (err) {
-      this.errorHandler(err);
-    }
-  }
-
-  // async androidGoogleAuth() {
-  //   try {
-  //     const result = await this.google.login({
-  //       scopes: "",
-  //       webClientId:
-  //           "169323504498-vggv4krnrvhut57qhjbr465taaen5g25.apps.googleusercontent.com",
-  //       offline: true
-  //     });
-  //
-  //     const customer: Customer = {
-  //       firstName: result.givenName,
-  //       lastName: result.familyName,
-  //       imageUrl: result.imageUrl,
-  //       uidFirebase: result.userId,
-  //       email: result.email
-  //     };
-  //     const sqlUser = await this.create(customer).toPromise();
-  //     localStorage.setItem("customer", JSON.stringify(sqlUser));
-  //     this.customerSubject.next(sqlUser);
-  //     this.loggedWith = "Google";
-  //     this.loggedIn.next(true);
-  //   } catch (err) {
-  //     this.errorHandler(err);
-  //   }
-  // }
-
   errorHandler(err) {
     this.loadingService.loading.dismiss();
     if (err.code === "auth/account-exists-with-different-credential") {
@@ -255,42 +163,5 @@ export class AuthService {
     } else {
       console.error(err);
     }
-  }
-
-  isUserEqual(facebookAuthResponse, firebaseUser): boolean {
-    if (firebaseUser) {
-      const providerData = firebaseUser.providerData;
-
-      providerData.forEach(data => {
-        if (
-          data.providerId === firebase.auth.FacebookAuthProvider.PROVIDER_ID &&
-          data.uid === facebookAuthResponse.userID
-        ) {
-          // We don't need to re-auth the Firebase connection.
-          return true;
-        }
-      });
-    }
-
-    return false;
-  }
-
-  getById(id: number): Observable<Customer> {
-    return this.httpClient.get<Customer>(
-      `${environment.apiUrl}/customer/${id}`
-    );
-  }
-
-  create(customer: Customer): Observable<Customer> {
-    return this.httpClient.post<Customer>(
-      `${environment.apiUrl}/customer/create`,
-      {
-        firstName: customer.firstName,
-        lastName: customer.lastName,
-        email: customer.email,
-        uidFirebase: customer.uidFirebase,
-        imageUrl: customer.imageUrl
-      }
-    );
   }
 }

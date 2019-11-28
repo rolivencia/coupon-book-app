@@ -1,20 +1,21 @@
-import {AppComponent} from "./app.component";
-import {AppRoutingModule} from "./app-routing.module";
-import {Facebook} from "@ionic-native/facebook/ngx";
-import {NgModule} from "@angular/core";
-import {BrowserModule} from "@angular/platform-browser";
-import {IonicModule, IonicRouteStrategy} from "@ionic/angular";
-import {StatusBar} from "@ionic-native/status-bar/ngx";
-import {SplashScreen} from "@ionic-native/splash-screen/ngx";
-import {RouteReuseStrategy} from "@angular/router";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {GooglePlus} from "@ionic-native/google-plus/ngx";
-import {LoadingService} from "@app/_services/loading.service";
-import {AlertService} from "@app/_services/alert.service";
-import {ErrorInterceptor, JwtInterceptor} from "@app/_helpers";
-import {ThemeService} from "@app/_services/theme.service";
-import {HeaderModule} from "@app/_components/header/header.module";
-import {OneSignal} from "@ionic-native/onesignal/ngx";
+import { AppComponent } from "./app.component";
+import { AppRoutingModule } from "./app-routing.module";
+import { Facebook } from "@ionic-native/facebook/ngx";
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { IonicModule, IonicRouteStrategy } from "@ionic/angular";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { SplashScreen } from "@ionic-native/splash-screen/ngx";
+import { RouteReuseStrategy } from "@angular/router";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { GooglePlus } from "@ionic-native/google-plus/ngx";
+import { LoadingService } from "@app/_services/loading.service";
+import { AlertService } from "@app/_services/alert.service";
+import { ErrorInterceptor, JwtInterceptor } from "@app/_helpers";
+import { ThemeService } from "@app/_services/theme.service";
+import { HeaderModule } from "@app/_components/header/header.module";
+import { OneSignal } from "@ionic-native/onesignal/ngx";
+import { AuthService } from "@app/_services/auth.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,6 +28,7 @@ import {OneSignal} from "@ionic-native/onesignal/ngx";
     HttpClientModule
   ],
   providers: [
+    AuthService,
     AlertService,
     Facebook,
     GooglePlus,
