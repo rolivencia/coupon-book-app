@@ -28,7 +28,7 @@ export class RegisterPage {
   ) {}
 
   ionViewDidEnter() {
-    this.authService.verificationCodeSent.pipe(first()).subscribe(status => {
+    this.authService.verificationCodeSent.subscribe(status => {
       this.registrationFormVisible = status;
     });
   }

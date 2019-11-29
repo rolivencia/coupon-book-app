@@ -1,4 +1,4 @@
-<app-header [title]="'Registrarse'"></app-header>
+<app-header [title]="'Registrarse'" [menuVisible]="false" [profileVisible]="false"></app-header>
 
 <ion-content>
   <ion-card color="light">
@@ -25,7 +25,8 @@
             [(ngModel)]="phone"
           ></ion-input>
         </ion-item>
-
+        <div class="ion-margin-top">
+        </div>
         <ion-button
           *ngIf="!registrationFormVisible && phone"
           (click)="getCode()"
@@ -46,7 +47,6 @@
     </ion-card-content>
   </ion-card>
 
-  <!--  <ion-card color="light" *ngIf="registrationFormVisible">-->
   <ion-card color="light" *ngIf="registrationFormVisible">
     <ion-card-content>
       <form (ngSubmit)="register()">
@@ -80,6 +80,7 @@
             name="verification"
             [(ngModel)]="verificationCode"
           ></ion-input>
+          <ion-label position="stacked">(*) El código es de 6 números. Escribir sin guiones ni separadores.</ion-label>
         </ion-item>
         <ion-button
           id="brugge-register-button"

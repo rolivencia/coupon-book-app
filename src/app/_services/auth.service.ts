@@ -94,6 +94,16 @@ export class AuthService {
     }
   }
 
+  /**
+   * Toma el cuerpo de un mensaje de verificación vía SMS y extrae el código de verificación
+   * @param messageBody
+   */
+  public parseSmsVerificationNumber(messageBody: string): string {
+    const matches = messageBody.match(/\d+/g);
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    return matches.reduce(reducer);
+  }
+
   async smsAuth(userInfo: any, verificationId: string, code: string) {
     this.loadingService.showLoading();
     try {
