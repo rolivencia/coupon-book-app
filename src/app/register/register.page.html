@@ -1,4 +1,8 @@
-<app-header [title]="'Registrarse'" [menuVisible]="false" [profileVisible]="false"></app-header>
+<app-header
+  [title]="'Registrarse'"
+  [menuVisible]="false"
+  [profileVisible]="false"
+></app-header>
 
 <ion-content>
   <ion-card color="light">
@@ -25,15 +29,14 @@
             [(ngModel)]="phone"
           ></ion-input>
         </ion-item>
-        <div class="ion-margin-top">
-        </div>
+        <div class="ion-margin-top"></div>
         <ion-button
           *ngIf="!registrationFormVisible && phone"
           (click)="getCode()"
           class="ion-margin-top"
           [color]="themeService.currentTheme.backgroundColor"
           expand="block"
-          >Recibir código de verificación</ion-button
+          >Recibir código vía SMS</ion-button
         >
         <ion-button
           *ngIf="registrationFormVisible"
@@ -47,7 +50,8 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card color="light" *ngIf="registrationFormVisible">
+    <ion-card color="light" *ngIf="registrationFormVisible">
+<!--  <ion-card color="light" *ngIf="true">-->
     <ion-card-content>
       <form (ngSubmit)="register()">
         <ng-container *ngIf="!alreadyRegistered">
@@ -76,17 +80,27 @@
         <ion-item>
           <ion-label><strong>Código de verificación:</strong></ion-label>
           <ion-input
+            required
             type="text"
             name="verification"
+            pattern="\d*"
             [(ngModel)]="verificationCode"
           ></ion-input>
-          <ion-label position="stacked">(*) El código es de 6 números. Escribir sin guiones ni separadores.</ion-label>
         </ion-item>
+
+        <div class="ion-margin-top ion-text-center">
+          <ion-label position="stacked"
+            >(*) El código de verificación es de 6 números. Escribir sin guiones ni
+            separadores.</ion-label
+          >
+        </div>
+
         <ion-button
           id="brugge-register-button"
           type="submit"
           class="ion-margin-top"
           expand="block"
+          [disabled]="checkInputs()"
           [color]="themeService.currentTheme.backgroundColor"
           >{{alreadyRegistered ? 'Ingresar' : 'Registrarse'}}</ion-button
         >

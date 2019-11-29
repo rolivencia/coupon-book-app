@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { AuthService } from "@app/_services/auth.service";
 import { CustomerService } from "@app/_services/customer.service";
-import { first } from "rxjs/operators";
 import { ThemeService } from "@app/_services/theme.service";
 
 @Component({
@@ -61,8 +60,8 @@ export class RegisterPage {
     );
   }
 
-  checkIfRegistered() {
-    return !this.alreadyRegistered ? this.firstName && this.lastName : true;
+  checkInputs() {
+    return !this.firstName || !this.lastName || this.verificationCode.length !== 6;
   }
 
   resetPhone() {
