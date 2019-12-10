@@ -10,6 +10,7 @@ import { LoadingService } from "@app/_services/loading.service";
 import { AlertService } from "@app/_services/alert.service";
 import { Router } from "@angular/router";
 import { CustomerService } from "@app/_services/customer.service";
+import { FirebaseX } from "@ionic-native/firebase-x/ngx";
 
 @Injectable({
   providedIn: "root"
@@ -31,6 +32,7 @@ export class AuthService {
 
   constructor(
     private alertService: AlertService,
+    private firebaseNative: FirebaseX,
     private customerService: CustomerService,
     private platform: Platform,
     private zone: NgZone,
@@ -74,6 +76,28 @@ export class AuthService {
         }
       });
     });
+  }
+
+  async getSmsVerificationCodeNative(phoneNumber: string) {
+    this.loadingService.showLoading();
+
+    const assignCredential = result => {
+      this.loadingService.loading.dismiss();
+      if (result) {
+        this.verificationCodeSent.next(true);
+        this.verificationId = result.verificationId;
+      }
+    };
+    const logError = error => {
+      this.loadingService.loading.dismiss();
+      console.error("Failed to verify phone number: " + error);
+    };
+
+    this.firebaseNative.verifyPhoneNumber(
+      assignCredential,
+      logError,
+      phoneNumber
+    );
   }
 
   async getSmsVerificationCode(phoneNumber: string, captcha: any) {
