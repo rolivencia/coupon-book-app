@@ -1,6 +1,5 @@
 import { Injectable, NgZone } from "@angular/core";
 import { Platform } from "@ionic/angular";
-import { Facebook } from "@ionic-native/facebook/ngx";
 import { BehaviorSubject, Observable } from "rxjs";
 import firebase from "@firebase/app";
 import "@firebase/auth";

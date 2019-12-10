@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import firebase from "@firebase/app";
 import "@firebase/auth";
-import { Facebook } from "@ionic-native/facebook/ngx";
+// import { Facebook } from "@ionic-native/facebook/ngx";
 import { AuthService } from "@app/_services/auth.service";
 import { LoadingService } from "@app/_services/loading.service";
 import { Platform } from "@ionic/angular";

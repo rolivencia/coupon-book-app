@@ -3,7 +3,7 @@ import { AuthService } from "@app/_services/auth.service";
 import firebase from "@firebase/app";
 import "@firebase/auth";
 import { LoadingService } from "@app/_services/loading.service";
-import { GooglePlus } from "@ionic-native/google-plus/ngx";
+// import { GooglePlus } from "@ionic-native/google-plus/ngx";
 import {Platform} from "@ionic/angular";
 import {CustomerService} from "@app/_services/customer.service";
 
