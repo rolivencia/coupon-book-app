@@ -10,8 +10,10 @@ android {
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
 
+    implementation "com.google.firebase:firebase-auth:18.0.+"
     implementation "com.onesignal:OneSignal:3.12.2"
 }
+apply from: "../../node_modules/cordova-support-google-services/build.gradle"
 apply from: "../../node_modules/onesignal-cordova-plugin/build-extras-onesignal.gradle"
 
 if (hasProperty('postBuildExtras')) {

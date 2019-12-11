@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { AuthService } from "@app/_services/auth.service";
 import { CustomerService } from "@app/_services/customer.service";
 import { ThemeService } from "@app/_services/theme.service";
+import { Platform } from "@ionic/angular";
 
 @Component({
   selector: "app-register",
@@ -23,6 +24,7 @@ export class RegisterPage {
   constructor(
     private authService: AuthService,
     private customerService: CustomerService,
+    private platform: Platform,
     public themeService: ThemeService
   ) {}
 
@@ -54,14 +56,20 @@ export class RegisterPage {
       ? this.recaptchaVerifier
       : this.authService.getVerificationCaptcha();
 
-    this.authService.getSmsVerificationCode(
-      parsedPhone,
-      this.recaptchaVerifier
-    );
+    if (this.platform.is("android") || this.platform.is("ios")) {
+      this.authService.getSmsVerificationCodeNative(parsedPhone);
+    } else {
+      this.authService.getSmsVerificationCode(
+        parsedPhone,
+        this.recaptchaVerifier
+      );
+    }
   }
 
   checkInputs() {
-    return !this.firstName || !this.lastName || this.verificationCode.length !== 6;
+    return (
+      !this.firstName || !this.lastName || this.verificationCode.length !== 6
+    );
   }
 
   resetPhone() {
@@ -74,10 +82,26 @@ export class RegisterPage {
   }
 
   register() {
-    this.authService.smsAuth(
-      { firstName: this.firstName, lastName: this.lastName, email: this.phone },
-      this.authService.verificationId,
-      this.verificationCode
-    );
+    if (this.platform.is("android") || this.platform.is("ios")) {
+      this.authService.smsAuthNative(
+        {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.phone
+        },
+        this.authService.verificationId,
+        this.verificationCode
+      );
+    } else {
+      this.authService.smsAuth(
+        {
+          firstName: this.firstName,
+          lastName: this.lastName,
+          email: this.phone
+        },
+        this.authService.verificationId,
+        this.verificationCode
+      );
+    }
   }
 }

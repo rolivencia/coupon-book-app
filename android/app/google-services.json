@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_number": "287785352097",
+    "firebase_url": "https://brugge-f8811.firebaseio.com",
+    "project_id": "brugge-f8811",
+    "storage_bucket": "brugge-f8811.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:287785352097:android:430741c1f3be87c9ece9e0",
+        "android_client_info": {
+          "package_name": "com.turingstudio.brugge"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "287785352097-3kdji8hhhao9o9ohr51k0ni7fnbbt7rb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.turingstudio.brugge",
+            "certificate_hash": "342f74f78731e336c6bf9d790bfdbfd359ad1505"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDc-Bmt6dQEq-VKHwxMYoH4gijkLRkZKGU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "287785352097-s0rc5isddgs3kilo9ku5jin399jd7fam.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "287785352097-u2nhgna0vcgfhqgdeau0um3ek08lkc7q.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.turingstudio.brugge"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

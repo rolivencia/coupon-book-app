@@ -10,6 +10,7 @@ import { LoadingService } from "@app/_services/loading.service";
 import { AlertService } from "@app/_services/alert.service";
 import { Router } from "@angular/router";
 import { CustomerService } from "@app/_services/customer.service";
+import { FirebaseAuthentication } from "@ionic-native/firebase-authentication/ngx";
 
 @Injectable({
   providedIn: "root"
@@ -34,7 +35,7 @@ export class AuthService {
     private customerService: CustomerService,
     private platform: Platform,
     private zone: NgZone,
-
+    private firebaseAuthentication: FirebaseAuthentication,
     public httpClient: HttpClient,
 
     private loadingService: LoadingService,
@@ -76,6 +77,23 @@ export class AuthService {
     });
   }
 
+  async getSmsVerificationCodeNative(phoneNumber: string) {
+    this.loadingService.showLoading();
+    try {
+      const result = await this.firebaseAuthentication.verifyPhoneNumber(
+        phoneNumber,
+        0
+      );
+      if (result) {
+        this.verificationCodeSent.next(true);
+        this.verificationId = result;
+      }
+      this.loadingService.loading.dismiss();
+    } catch (err) {
+      this.errorHandler(err);
+    }
+  }
+
   async getSmsVerificationCode(phoneNumber: string, captcha: any) {
     this.loadingService.showLoading();
     try {
@@ -88,7 +106,6 @@ export class AuthService {
       }
       this.loadingService.loading.dismiss();
     } catch (err) {
-      this.loadingService.loading.dismiss();
       this.errorHandler(err);
     }
   }
@@ -101,6 +118,30 @@ export class AuthService {
     const matches = messageBody.match(/\d+/g);
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     return matches.reduce(reducer);
+  }
+
+  async smsAuthNative(userInfo: any, verificationId: string, code: any) {
+    this.loadingService.showLoading();
+    try {
+      const result = await this.firebaseAuthentication.signInWithVerificationId(
+        verificationId,
+        code
+      );
+
+      const customer = await this.customerService.logInSqlDatabase(
+        result,
+        "SMS",
+        userInfo
+      );
+
+      this.customerSubject.next(customer);
+      this.loggedWith = "SMS";
+
+      this.loggedIn.next(true);
+      this.loadingService.loading.dismiss();
+    } catch (err) {
+      this.errorHandler(err);
+    }
   }
 
   async smsAuth(userInfo: any, verificationId: string, code: string) {
@@ -127,33 +168,24 @@ export class AuthService {
       this.loggedIn.next(true);
       this.loadingService.loading.dismiss();
     } catch (err) {
-      this.loadingService.loading.dismiss();
       this.errorHandler(err);
     }
   }
 
   async logout(): Promise<void> {
-    if (this.platform.is("capacitor")) {
+    if (this.platform.is("android") || this.platform.is("ios")) {
       try {
-        if (this.loggedWith === "Facebook") {
-          // this.authFacebook.logout(); // Unauth with Facebook
-        }
-        if (this.loggedWith === "Google") {
-          // this.authGoogle.logout(); // Unauth with Google
-        }
-        await firebase.auth().signOut(); // Unauth with Firebase
+        await this.firebaseAuthentication.signOut(); // Unauth with Firebase
         this.router.navigate(["login"]);
       } catch (err) {
-        this.loadingService.loading.dismiss();
-        console.log(err);
+        this.errorHandler(err);
       }
     } else {
       try {
         await firebase.auth().signOut();
         this.router.navigate(["login"]);
       } catch (err) {
-        this.loadingService.loading.dismiss();
-        console.error(err);
+        this.errorHandler(err);
       }
     }
 
@@ -164,13 +196,12 @@ export class AuthService {
 
   errorHandler(err) {
     this.loadingService.loading.dismiss();
+    console.error(err);
     if (err.code === "auth/account-exists-with-different-credential") {
       this.alertService.show(
         "¡Error!",
         "¡Vaya! Tu email ya está asociado a otra plataforma.\n\n Intentá ingresar con la otra opción."
       );
-    } else {
-      console.error(err);
     }
   }
 }
