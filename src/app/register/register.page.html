@@ -9,7 +9,7 @@
     <ion-card-content>
       <ion-label
         >Ingresá tu número de teléfono, con característica y código de área, sin
-        símbolos ni separadores. Para Santa Fe: 54342XXXXXX</ion-label
+        símbolos ni separadores. Para Santa Fe: 54342XXXXXXX</ion-label
       >
     </ion-card-content>
   </ion-card>
@@ -31,7 +31,8 @@
         </ion-item>
         <div class="ion-margin-top"></div>
         <ion-button
-          *ngIf="!registrationFormVisible && phone"
+          *ngIf="!registrationFormVisible"
+          [disabled]="phoneLength(phone)"
           (click)="getCode()"
           class="ion-margin-top"
           [color]="themeService.currentTheme.backgroundColor"

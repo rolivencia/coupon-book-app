@@ -173,25 +173,21 @@ export class AuthService {
   }
 
   async logout(): Promise<void> {
-    if (this.platform.is("android") || this.platform.is("ios")) {
-      try {
-        await this.firebaseAuthentication.signOut(); // Unauth with Firebase
-        this.router.navigate(["login"]);
-      } catch (err) {
-        this.errorHandler(err);
-      }
-    } else {
-      try {
-        await firebase.auth().signOut();
-        this.router.navigate(["login"]);
-      } catch (err) {
-        this.errorHandler(err);
-      }
-    }
+    try {
+      // remove user from local storage to log user out
+      localStorage.removeItem("customer");
+      this.customerSubject.next(null);
 
-    // remove user from local storage to log user out
-    localStorage.removeItem("customer");
-    this.customerSubject.next(null);
+      if (this.platform.is("android") || this.platform.is("ios")) {
+        await this.firebaseAuthentication.signOut(); // Unauth with Firebase
+      } else {
+        await firebase.auth().signOut();
+      }
+
+      this.router.navigate(["login"]);
+    } catch (err) {
+      this.errorHandler(err);
+    }
   }
 
   errorHandler(err) {
