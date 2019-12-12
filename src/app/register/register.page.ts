@@ -83,7 +83,7 @@ export class RegisterPage {
 
   phoneLength(phone){
     const matcher = /^\d+$/; // Regexp para matchear el teléfono y verificar si todos los caracteres son números.
-    return phone.length <= 10 || !matcher.test(phone);
+    return phone.length <= 10 || !matcher.test(phone) || phone.startsWith("549");
   }
 
   register() {

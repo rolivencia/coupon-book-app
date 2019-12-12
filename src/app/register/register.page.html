@@ -8,8 +8,9 @@
   <ion-card color="light">
     <ion-card-content>
       <ion-label
-        >Ingresá tu número de teléfono, con característica y código de área, sin
-        símbolos ni separadores. Para Santa Fe: 54342XXXXXXX</ion-label
+        >Ingresá tu teléfono, con característica y código de área, sin símbolos,
+        separadores ni 9 post-característica. Para Santa Fe:
+        54342XXXXXXX</ion-label
       >
     </ion-card-content>
   </ion-card>
@@ -51,8 +52,8 @@
     </ion-card-content>
   </ion-card>
 
-    <ion-card color="light" *ngIf="registrationFormVisible">
-<!--  <ion-card color="light" *ngIf="true">-->
+  <ion-card color="light" *ngIf="registrationFormVisible">
+    <!--  <ion-card color="light" *ngIf="true">-->
     <ion-card-content>
       <form (ngSubmit)="register()">
         <ng-container *ngIf="!alreadyRegistered">
@@ -91,8 +92,8 @@
 
         <div class="ion-margin-top ion-text-center">
           <ion-label position="stacked"
-            >(*) El código de verificación es de 6 números. Escribir sin guiones ni
-            separadores.</ion-label
+            >(*) El código de verificación es de 6 números. Escribir sin guiones
+            ni separadores.</ion-label
           >
         </div>
 
