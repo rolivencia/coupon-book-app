@@ -56,7 +56,7 @@ export class RegisterPage {
       ? this.recaptchaVerifier
       : this.authService.getVerificationCaptcha();
 
-    if (this.platform.is("mobileweb")) {
+    if (this.platform.is("mobileweb") || this.platform.is("desktop")) {
       this.authService.getSmsVerificationCode(
         parsedPhone,
         this.recaptchaVerifier
@@ -90,7 +90,7 @@ export class RegisterPage {
   }
 
   register() {
-    if (this.platform.is("mobileweb")) {
+    if (this.platform.is("mobileweb") || this.platform.is("desktop")) {
       this.authService.smsAuth(
         {
           firstName: this.firstName,
