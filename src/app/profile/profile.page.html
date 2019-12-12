@@ -32,7 +32,7 @@
   <ion-card *ngIf="loaded" [ngStyle]="{'background-color': themeService.currentTheme.hexBackgroundColor}">
 
     <ion-card-header class="ion-text-center">
-      <ion-card-title [ngStyle]="{'color': themeService.currentTheme.color}">{{redeemedCoupons.length ? 'Últimos canjes:' : '¡Todavía no hiciste ningún canje!' }}</ion-card-title>
+      <ion-card-title id="no-redemptions" [ngStyle]="{'color': themeService.currentTheme.color}">{{redeemedCoupons.length ? 'Últimos canjes:' : '¡Todavía no hiciste ningún canje!' }}</ion-card-title>
     </ion-card-header>
     
     <ion-card class="redeemed-coupon" *ngFor="let redeemedCoupon of redeemedCoupons" [ngStyle]="{'background-color': 'white'}">

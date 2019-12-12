@@ -56,13 +56,14 @@ export class RegisterPage {
       ? this.recaptchaVerifier
       : this.authService.getVerificationCaptcha();
 
-    if (this.platform.is("android") || this.platform.is("ios")) {
-      this.authService.getSmsVerificationCodeNative(parsedPhone);
-    } else {
+    if (this.platform.is("mobileweb")) {
       this.authService.getSmsVerificationCode(
         parsedPhone,
         this.recaptchaVerifier
       );
+  }
+    else if (this.platform.is("android") || this.platform.is("ios")) {
+      this.authService.getSmsVerificationCodeNative(parsedPhone);
     }
   }
 
@@ -81,14 +82,16 @@ export class RegisterPage {
     this.authService.verificationId = "";
   }
 
-  phoneLength(phone){
+  phoneLength(phone) {
     const matcher = /^\d+$/; // Regexp para matchear el teléfono y verificar si todos los caracteres son números.
-    return phone.length <= 10 || !matcher.test(phone) || phone.startsWith("549");
+    return (
+      phone.length <= 10 || !matcher.test(phone) || phone.startsWith("549")
+    );
   }
 
   register() {
-    if (this.platform.is("android") || this.platform.is("ios")) {
-      this.authService.smsAuthNative(
+    if (this.platform.is("mobileweb")) {
+      this.authService.smsAuth(
         {
           firstName: this.firstName,
           lastName: this.lastName,
@@ -97,8 +100,8 @@ export class RegisterPage {
         this.authService.verificationId,
         this.verificationCode
       );
-    } else {
-      this.authService.smsAuth(
+    } else if (this.platform.is("android") || this.platform.is("ios")) {
+      this.authService.smsAuthNative(
         {
           firstName: this.firstName,
           lastName: this.lastName,
