@@ -15,9 +15,15 @@ ion-card {
     padding: 0.25rem;
     background-color: rgba(0,0,0, 0.75);
     display:inline-block;
-    letter-spacing: 0.025rem;
+    letter-spacing: 0;
     color: white;
-    font-size: 1.6rem;
+    &.ios{
+      font-size: 1.4rem;
+    }
+    &.md{
+      font-size: 1.6rem;
+    }
+
   }
 
   ion-card-header {

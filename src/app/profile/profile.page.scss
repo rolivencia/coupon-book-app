@@ -26,14 +26,18 @@ p {
   }
 }
 
-ion-button{
-  ion-label{
-    font-family: 'Open Sans Condensed', sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    margin-left: 10px;
-  }
-}
+//ion-button{
+//  ion-label{
+//    font-family: 'Open Sans Condensed', sans-serif;
+//    font-size: 1rem;
+//    font-weight: 600;
+//    margin-left: 10px;
+//    &.ios{
+//      text-transform: uppercase;
+//      letter-spacing: 0.05rem;
+//    }
+//  }
+//}
 
 .redeemed-coupon{
   ion-thumbnail{
