@@ -14,7 +14,7 @@
     "build-test": "ng build",
     "android-test": "ionic build && npx cap sync && npx cap open android",
     "android-deploy": "ionic build --prod && npx cap sync && npx cap open android",
-    "ios-test": "ionic build && && npx cap sync && npx cap open ios",
+    "ios-test": "ionic build && npx cap sync && npx cap open ios",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
