@@ -55,7 +55,7 @@ export class NotificationService {
     if(route === "coupons"){
       this.router.navigate(["/coupons"]);
     }
-    if(route === "coupon-detail"){
+    if(route === "coupon-detail" && id){
       this.router.navigate(["/coupon-detail/" + id]);
     }
     if(route === "recommended"){
