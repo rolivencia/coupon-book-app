@@ -40,18 +40,22 @@ ion-card{
   ion-card-subtitle{
     height: 80px;
     margin-bottom: 4px;
+    padding-left: 5px;
+    padding-right: 5px;
 
     label{
       padding: 4px;
       color: white;
       font-family: "Open Sans Condensed";
       font-size: 14px;
-      line-height: 28px;
+      line-height: 27px;
       font-weight: 400;
       background-color: rgba(0,0,0, 0.75);
       //text-transform: none;
       text-transform: uppercase;
-      letter-spacing: 0;
+      letter-spacing: 0.02em;
+      white-space: pre-wrap;
+      box-shadow: 5px 0 0 rgba(0,0,0, 0.75), -5px 0 0 rgba(0,0,0, 0.75);
     }
   }
 }

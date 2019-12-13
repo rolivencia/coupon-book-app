@@ -5,6 +5,9 @@
 
 ion-card {
   background-size: cover;
+  background-position-x: 50%;
+  background-position-y: 50%;
+  background-repeat: no-repeat;
   height: 160px;
 
   ion-grid, ion-row{
