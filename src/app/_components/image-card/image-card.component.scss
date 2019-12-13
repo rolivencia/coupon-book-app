@@ -26,6 +26,7 @@ ion-card {
     &.md{
       font-size: 1.6rem;
     }
+    box-shadow: 2px 0 0 rgba(0,0,0, 0.75), -2px 0 0 rgba(0,0,0, 0.75);
 
   }
 
@@ -52,9 +53,13 @@ ion-card {
       padding: 0.125rem;
       color: black;
       font-family: "Open Sans Condensed";
-      line-height: 1.75rem;
-      font-weight: 500;
-      font-size: 0.8rem;
+      font-size: 14px;
+      line-height: 27px;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      white-space: pre-wrap;
+      box-shadow: 2px 0 0 white, -5px 0 0 white;
     }
   }
 
