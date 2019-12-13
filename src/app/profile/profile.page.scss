@@ -15,12 +15,14 @@ ion-card-header{
   }
   ion-card-subtitle{
     font-family: 'Open Sans Condensed', sans-serif;
+    text-transform: uppercase;
     margin-top: 4px;
   }
 }
 
 p {
   font-family: 'Open Sans Condensed', sans-serif;
+  text-transform: uppercase;
   strong{
     font-weight: 500;  
   }

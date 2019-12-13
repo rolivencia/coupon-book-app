@@ -11,7 +11,6 @@ import { Platform } from "@ionic/angular";
 })
 export class RegisterPage {
   phone: string = "54342";
-  // phone: string = "543425783414";
   firstName: string = "";
   lastName: string = "";
   verificationCode: string = "";
@@ -32,6 +31,10 @@ export class RegisterPage {
     this.authService.verificationCodeSent.subscribe(status => {
       this.registrationFormVisible = status;
     });
+  }
+
+  ionViewDidLeave() {
+    this.authService.verificationCodeSent.next(false);
   }
 
   async getCode() {
@@ -56,15 +59,7 @@ export class RegisterPage {
       ? this.recaptchaVerifier
       : this.authService.getVerificationCaptcha();
 
-    if (this.platform.is("mobileweb") || this.platform.is("desktop")) {
-      this.authService.getSmsVerificationCode(
-        parsedPhone,
-        this.recaptchaVerifier
-      );
-  }
-    else if (this.platform.is("android") || this.platform.is("ios")) {
-      this.authService.getSmsVerificationCodeNative(parsedPhone);
-    }
+    this.authService.getSmsVerificationCodeNative(parsedPhone);
   }
 
   checkInputs() {
@@ -75,6 +70,7 @@ export class RegisterPage {
 
   resetPhone() {
     this.registrationFormVisible = false;
+    this.verificationCode = "";
   }
 
   clear() {
@@ -90,26 +86,14 @@ export class RegisterPage {
   }
 
   register() {
-    if (this.platform.is("mobileweb") || this.platform.is("desktop")) {
-      this.authService.smsAuth(
-        {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.phone
-        },
-        this.authService.verificationId,
-        this.verificationCode
-      );
-    } else if (this.platform.is("android") || this.platform.is("ios")) {
-      this.authService.smsAuthNative(
-        {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.phone
-        },
-        this.authService.verificationId,
-        this.verificationCode
-      );
-    }
+    this.authService.smsAuthNative(
+      {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.phone
+      },
+      this.authService.verificationId,
+      this.verificationCode
+    );
   }
 }

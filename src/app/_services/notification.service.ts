@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { Injectable } from "@angular/core";
+import { OneSignal } from "@ionic-native/onesignal/ngx";
 import { Router } from "@angular/router";
+import { AuthService } from "@app/_services/auth.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class NotificationService {
-
   get appId(): string {
     return this._appId;
   }
@@ -23,13 +23,19 @@ export class NotificationService {
   private _authKey: string = "MDFlN2NjNjctMGY1MC00ZTVmLThhOTEtMWJmZTI3NDI4YzFk";
   private _senderId: string = "287785352097";
 
-  constructor(private oneSignal: OneSignal, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private oneSignal: OneSignal,
+    private router: Router
+  ) {}
 
-  init(){
+  init() {
     // I recommend to put these into your environment.ts
     this.oneSignal.startInit(this.appId, this.senderId);
 
-    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
+    this.oneSignal.inFocusDisplaying(
+      this.oneSignal.OSInFocusDisplayOption.None
+    );
 
     // Notifcation was received in general
     this.oneSignal.handleNotificationReceived().subscribe(data => {
@@ -43,7 +49,11 @@ export class NotificationService {
       // Just a note that the data is a different place here!
       let additionalData = data.notification.payload.additionalData;
 
-      this.navigate('Notification opened', 'You already read this before', additionalData);
+      this.navigate(
+        "Notification opened",
+        "You already read this before",
+        additionalData
+      );
     });
 
     this.oneSignal.endInit();
@@ -52,15 +62,20 @@ export class NotificationService {
   async navigate(title, msg, data) {
     const route = data.route;
     const id = data.id;
-    if(route === "coupons"){
-      this.router.navigate(["/coupons"]);
-    }
-    if(route === "coupon-detail" && id){
-      this.router.navigate(["/coupon-detail/" + id]);
-    }
-    if(route === "recommended"){
-      this.router.navigate(["/recommended"]);
+    // alert("NOTIFICATION HANDLED. Route: " + route);
 
-    }
+    this.authService.loggedIn.subscribe(userLogged => {
+      if (userLogged) {
+        if (route === "coupons") {
+          this.router.navigate(["/coupons"]);
+        }
+        if (route === "coupon-detail" && id) {
+          this.router.navigate(["/coupon-detail/" + id]);
+        }
+        if (route === "recommended") {
+          this.router.navigate(["/recommended"]);
+        }
+      }
+    });
   }
 }

@@ -65,7 +65,7 @@ export class AuthService {
     firebase.initializeApp(environment.firebaseConfig);
 
     // Emit logged in status whenever auth state changes
-    firebase.auth().onAuthStateChanged(firebaseUser => {
+    this.firebaseAuthentication.onAuthStateChanged().subscribe(firebaseUser => {
       this.zone.run(() => {
         firebaseUser ? this.loggedIn.next(true) : this.loggedIn.next(false);
         if (firebaseUser) {
@@ -178,11 +178,8 @@ export class AuthService {
       localStorage.removeItem("customer");
       this.customerSubject.next(null);
 
-      if (this.platform.is("android") || this.platform.is("ios")) {
-        await this.firebaseAuthentication.signOut(); // Unauth with Firebase
-      } else {
-        await firebase.auth().signOut();
-      }
+      await this.firebaseAuthentication.signOut(); // Unauth with Firebase
+      await firebase.auth().signOut();
 
       this.router.navigate(["login"]);
     } catch (err) {

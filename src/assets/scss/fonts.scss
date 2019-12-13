@@ -19,7 +19,13 @@ p {
 ion-content{
   background-color: #cccccc;
   //opacity: 0.5;
-  --background: url("/assets/img/background.png") 100% no-repeat
+  @media (max-width: 720px) {
+    --background: url("/assets/img/background-full.png");
+  }
+  @media (min-width: 721px) {
+    --background: url("/assets/img/background.png");
+  }
+  background-size: 100% 100%;
 }
 
 //ion-split-pane{
