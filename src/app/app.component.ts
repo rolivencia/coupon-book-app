@@ -3,8 +3,8 @@ import { StatusBar } from "@ionic-native/status-bar/ngx";
 import { AuthService } from "./_services/auth.service";
 import { Platform } from "@ionic/angular";
 import { Component } from "@angular/core";
-import * as moment from 'moment';
-import {NotificationService} from "@app/_services/notification.service";
+import * as moment from "moment";
+import { NotificationService } from "@app/_services/notification.service";
 
 @Component({
   selector: "app-root",
@@ -19,36 +19,35 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
-    moment.locale('es');
+    moment.locale("es");
     this.initializeApp();
   }
 
   public appPages = [
     {
-      title: "Inicio",
-      url: "/home",
-      icon: "home"
+      title: this.authService.loggedIn.value ? "Inicio" : "Login",
+      url: this.authService.loggedIn.value ? "/home" : "/login",
+      icon: this.authService.loggedIn.value ? "home" : "log-in",
+      showWhenNotLogged: true
     },
     {
       title: "Cuponera",
       url: "/coupons",
-      icon: "pricetags"
+      icon: "pricetags",
+      showWhenNotLogged: false
     },
     {
       title: "Recomendados",
       url: "/recommended",
-      icon: "pizza"
+      icon: "pizza",
+      showWhenNotLogged: true
     },
     {
       title: "Contacto y Reservas",
       url: "/contact",
-      icon: "send"
-    },
-    // {
-    //   title: "Perfil",
-    //   url: "/profile",
-    //   icon: "contact"
-    // }
+      icon: "send",
+      showWhenNotLogged: false
+    }
   ];
 
   initializeApp() {
@@ -59,7 +58,7 @@ export class AppComponent {
       this.splashScreen.hide();
 
       // Start the notification service
-      if (this.platform.is('cordova')) {
+      if (this.platform.is("cordova")) {
         this.notificationService.init();
       }
     });

@@ -1,17 +1,21 @@
 <ion-header>
   <ion-toolbar [color]="themeService.currentTheme.backgroundColor">
-    <ion-buttons slot="end" *ngIf="profileVisible">
-      <ion-button (click)="toProfile()">
-        <ion-icon slot="icon-only" name="contact" ></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-buttons slot="start" *ngIf="menuVisible">
-      <ion-button>
+
+    <ion-buttons slot="start">
+      <ion-button [ngStyle]="{'visibility': menuVisible ? 'inherit' :'hidden'}">
         <ion-menu-button></ion-menu-button>
       </ion-button>
     </ion-buttons>
+
     <ion-title class="ion-text-center" [ngStyle]="{'color': themeService.currentTheme.color}">
       {{title}}
     </ion-title>
+
+    <ion-buttons slot="end" >
+      <ion-button (click)="toProfile()" [ngStyle]="{'visibility': profileVisible ? 'inherit' :'hidden', 'width': '68px'}">
+        <ion-icon name="contact" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
