@@ -1,6 +1,6 @@
 <ion-app>
   <ion-split-pane>
-    <ion-menu *ngIf="authService.loggedIn.value" type="overlay">
+    <ion-menu type="overlay">
       <app-header
         [title]="'Menú'"
         [menuVisible]="false"
@@ -8,18 +8,23 @@
       ></app-header>
       <ion-content>
         <ion-list class="ion-no-padding ion-no-margin">
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
-              <ion-icon slot="start" [name]="p.icon"></ion-icon>
-              <ion-label>
-                {{ p.title }}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+          <ng-container *ngFor="let p of appPages">
+            <ion-menu-toggle
+              auto-hide="false"
+              *ngIf="
+                authService.loggedIn.value ||
+                (p.showWhenNotLogged && !authService.loggedIn.value)
+              "
+            >
+              <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+                <ion-icon slot="start" [name]="p.icon"></ion-icon>
+                <ion-label>
+                  {{ p.title }}
+                </ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ng-container>
         </ion-list>
-<!--        <div>-->
-<!--          <img [src]="'assets/img/side-menu.jpg'" />-->
-<!--        </div>-->
       </ion-content>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>
