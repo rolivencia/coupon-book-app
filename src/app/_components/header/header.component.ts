@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   @Input() profileVisible: boolean = true;
 
   constructor(
-    private authService: AuthService,
+    public authService: AuthService,
     private menu: MenuController,
     private router: Router,
     public themeService: ThemeService
