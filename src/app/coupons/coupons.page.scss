@@ -44,17 +44,15 @@ ion-card{
     padding-right: 5px;
 
     label{
-      padding: 4px;
+      padding: 4px 0 4px 0;
       color: white;
       font-family: "Open Sans Condensed";
       font-size: 14px;
       line-height: 27px;
       font-weight: 400;
       background-color: rgba(0,0,0, 0.75);
-      //text-transform: none;
       text-transform: uppercase;
       letter-spacing: 0.02em;
-      white-space: pre-wrap;
       box-shadow: 5px 0 0 rgba(0,0,0, 0.75), -5px 0 0 rgba(0,0,0, 0.75);
     }
   }

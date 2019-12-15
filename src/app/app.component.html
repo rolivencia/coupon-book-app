@@ -12,8 +12,8 @@
             <ion-menu-toggle
               auto-hide="false"
               *ngIf="
-                authService.loggedIn.value ||
-                (p.showWhenNotLogged && !authService.loggedIn.value)
+                authService.loggedIn.value && p.showWhenLogged ||
+                !authService.loggedIn.value && p.showWhenNotLogged
               "
             >
               <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">

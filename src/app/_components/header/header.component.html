@@ -12,7 +12,7 @@
     </ion-title>
 
     <ion-buttons slot="end" >
-      <ion-button (click)="toProfile()" [ngStyle]="{'visibility': profileVisible ? 'inherit' :'hidden', 'width': '48px'}">
+      <ion-button (click)="toProfile()" [ngStyle]="{'visibility': profileVisible && authService.loggedIn.value ? 'inherit' :'hidden', 'width': '48px'}">
         <ion-icon name="contact" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>

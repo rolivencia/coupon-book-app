@@ -25,28 +25,39 @@ export class AppComponent {
 
   public appPages = [
     {
-      title: this.authService.loggedIn.value ? "Inicio" : "Login",
-      url: this.authService.loggedIn.value ? "/home" : "/login",
-      icon: this.authService.loggedIn.value ? "home" : "log-in",
+      title: "Inicio",
+      url: "/home",
+      icon: "home",
+      showWhenLogged: true,
+      showWhenNotLogged: false
+    },
+    {
+      title: "Login",
+      url: "/login",
+      icon: "log-in",
+      showWhenLogged: false,
       showWhenNotLogged: true
     },
     {
       title: "Cuponera",
       url: "/coupons",
       icon: "pricetags",
+      showWhenLogged: true,
       showWhenNotLogged: false
     },
     {
       title: "Recomendados",
       url: "/recommended",
       icon: "pizza",
+      showWhenLogged: true,
       showWhenNotLogged: true
     },
     {
       title: "Contacto y Reservas",
       url: "/contact",
       icon: "send",
-      showWhenNotLogged: false
+      showWhenLogged: true,
+      showWhenNotLogged: true
     }
   ];
 

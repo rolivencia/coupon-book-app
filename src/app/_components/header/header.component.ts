@@ -1,7 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { MenuController } from "@ionic/angular";
 import { Router } from "@angular/router";
-import {ThemeService} from "@app/_services/theme.service";
+import { ThemeService } from "@app/_services/theme.service";
+import { AuthService } from "@app/_services/auth.service";
 
 @Component({
   selector: "app-header",
@@ -13,7 +14,12 @@ export class HeaderComponent implements OnInit {
   @Input() menuVisible: boolean = true;
   @Input() profileVisible: boolean = true;
 
-  constructor(private menu: MenuController, private router: Router, public themeService: ThemeService) {}
+  constructor(
+    private authService: AuthService,
+    private menu: MenuController,
+    private router: Router,
+    public themeService: ThemeService
+  ) {}
 
   openFirst() {
     this.menu.enable(true, "first");

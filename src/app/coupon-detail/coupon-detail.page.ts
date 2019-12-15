@@ -1,16 +1,16 @@
-import {Component, OnInit} from "@angular/core";
-import {ActivatedRoute, Router} from "@angular/router";
-import {Coupon} from "@app/_models/coupon";
-import {ThemeService} from "@app/_services/theme.service";
-import {AuthService} from "@app/_services/auth.service";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Coupon } from "@app/_models/coupon";
+import { ThemeService } from "@app/_services/theme.service";
+import { AuthService } from "@app/_services/auth.service";
 
 @Component({
   selector: "app-coupon-detail",
   templateUrl: "./coupon-detail.page.html",
-  styleUrls: ["./coupon-detail.page.scss"]
+  styleUrls: ["./coupon-detail.page.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class CouponDetailPage implements OnInit {
-
   coupon: Coupon;
   buttonLabel: string = "Volver";
   view: string = "detail";
@@ -23,8 +23,7 @@ export class CouponDetailPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     public themeService: ThemeService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     if (this.route.snapshot.data["coupon"]) {
@@ -33,11 +32,14 @@ export class CouponDetailPage implements OnInit {
     }
   }
 
-  generateQrCode(){
-    this.couponCustomerCode = JSON.stringify({idCustomer: this.authService.currentCustomer.id, idCoupon: this.coupon.id});
+  generateQrCode() {
+    this.couponCustomerCode = JSON.stringify({
+      idCustomer: this.authService.currentCustomer.id,
+      idCoupon: this.coupon.id
+    });
   }
 
   goBack() {
-    this.router.navigate(['/coupons']);
+    this.router.navigate(["/coupons"]);
   }
 }

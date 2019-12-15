@@ -15,6 +15,11 @@ ion-card {
     font-size: 1.25rem;
   }
 
+  ion-card-content{
+    text-transform: uppercase;
+    padding: 0 12px 0 12px;
+  }
+
   qrcode{
     img{
       max-width: 250px;
