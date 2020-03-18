@@ -14,7 +14,6 @@ export class HomePage implements OnInit {
     { id: "coupons", name: "Cuponera", subtitle: 'Promos y descuentos exclusivos', route: '/coupons', icon: 'pricetags'},
     { id: "recommended", name: "Recomendados", subtitle: 'Birras, tragos y platos', route: '/recommended', icon: 'pizza'},
     { id: "contact", name: "Contacto y Reservas", subtitle: 'Comunicate por cualquier medio', route: '/contact', icon: 'send'},
-    // { id: "profile", name: "Perfil", subtitle: 'Accedé a tu perfil de usuario', route: '/profile'}
   ];
 
   constructor(

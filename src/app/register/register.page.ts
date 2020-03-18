@@ -3,6 +3,7 @@ import { AuthService } from "@app/_services/auth.service";
 import { CustomerService } from "@app/_services/customer.service";
 import { ThemeService } from "@app/_services/theme.service";
 import { Platform } from "@ionic/angular";
+import { Device } from '@ionic-native/device/ngx';
 
 @Component({
   selector: "app-register",
@@ -23,9 +24,12 @@ export class RegisterPage {
   constructor(
     private authService: AuthService,
     private customerService: CustomerService,
+    private device: Device,
     private platform: Platform,
     public themeService: ThemeService
-  ) {}
+  ) {
+    console.log('Device UUID is: ' + this.device.uuid);
+  }
 
   ionViewDidEnter() {
     this.authService.verificationCodeSent.subscribe(status => {

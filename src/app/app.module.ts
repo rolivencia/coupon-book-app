@@ -15,6 +15,7 @@ import { HeaderModule } from "@app/_components/header/header.module";
 import { OneSignal } from "@ionic-native/onesignal/ngx";
 import { AuthService } from "@app/_services/auth.service";
 import { FirebaseAuthentication } from "@ionic-native/firebase-authentication/ngx";
+import { Device } from "@ionic-native/device/ngx";
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { FirebaseAuthentication } from "@ionic-native/firebase-authentication/ng
   providers: [
     AuthService,
     AlertService,
+    Device,
     FirebaseAuthentication,
     LoadingService,
     OneSignal,

@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://localhost:4000',
-  apiUrl: 'https://brugge-manager.herokuapp.com',
+  apiUrl: 'http://localhost:4000',
+  // apiUrl: 'https://brugge-manager.herokuapp.com',
   firebaseConfig: {
     apiKey: "AIzaSyAi2xsjCLF1UDSVzClwoqUWFWqHLeXxuFo",
     authDomain: "brugge-f8811.firebaseapp.com",
