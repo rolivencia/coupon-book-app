@@ -4,8 +4,8 @@ export class Customer {
   lastName: string;
   email: string;
   imageUrl: string;
-  uidFirebase: string;
+  idDevice: string;
   token?: string;
 
-  constructor(){}
+  constructor() {}
 }

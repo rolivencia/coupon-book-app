@@ -89,12 +89,14 @@ export class RegisterPage {
     );
   }
 
+  // TODO: Agregar la variante para poder utilizar esta autenticación desde browser web (chequear plataforma)
   register() {
     this.authService.smsAuthNative(
       {
         firstName: this.firstName,
         lastName: this.lastName,
-        email: this.phone
+        email: this.phone,
+        idDevice: this.device.uuid
       },
       this.authService.verificationId,
       this.verificationCode

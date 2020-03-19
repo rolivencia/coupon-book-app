@@ -29,7 +29,7 @@ export class CustomerService {
         firstName: customer.firstName,
         lastName: customer.lastName,
         email: customer.email,
-        uidFirebase: customer.uidFirebase,
+        idDevice: customer.idDevice,
         imageUrl: customer.imageUrl
       }
     );
@@ -37,23 +37,10 @@ export class CustomerService {
 
   async logInSqlDatabase(result, loggedWith: string, userInfo?: any) {
     const customer: Customer = {
-      // firstName: result.additionalUserInfo.profile.first_name
-      //   ? result.additionalUserInfo.profile.first_name
-      //   : result.additionalUserInfo.profile.given_name,
-      // lastName: result.additionalUserInfo.profile.last_name
-      //   ? result.additionalUserInfo.profile.last_name
-      //   : result.additionalUserInfo.profile.family_name,
-      // imageUrl: result.additionalUserInfo.profile.picture.data
-      //   ? result.additionalUserInfo.profile.picture.data.url
-      //   : result.additionalUserInfo.profile.picture,
-      // uidFirebase: result.additionalUserInfo.profile.id
-      //   ? result.additionalUserInfo.profile.id
-      //   : result.additionalUserInfo.profile.sub,
-      // email: result.additionalUserInfo.profile.email
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
       imageUrl: "",
-      uidFirebase: "",
+      idDevice: userInfo.idDevice,
       email: userInfo.email
     };
     const sqlUser = await this.create(customer).toPromise();
