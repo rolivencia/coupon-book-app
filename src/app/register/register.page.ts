@@ -3,7 +3,7 @@ import { AuthService } from "@app/_services/auth.service";
 import { CustomerService } from "@app/_services/customer.service";
 import { ThemeService } from "@app/_services/theme.service";
 import { Platform } from "@ionic/angular";
-import { Device } from '@ionic-native/device/ngx';
+import { Device } from "@ionic-native/device/ngx";
 
 @Component({
   selector: "app-register",
@@ -14,6 +14,7 @@ export class RegisterPage {
   phone: string = "54342";
   firstName: string = "";
   lastName: string = "";
+  idDevice: string = "";
   verificationCode: string = "";
 
   alreadyRegistered = false;
@@ -28,7 +29,7 @@ export class RegisterPage {
     private platform: Platform,
     public themeService: ThemeService
   ) {
-    console.log('Device UUID is: ' + this.device.uuid);
+    console.log("Device UUID is: " + this.device.uuid);
   }
 
   ionViewDidEnter() {
@@ -49,6 +50,7 @@ export class RegisterPage {
     if (customer) {
       this.firstName = customer.firstName;
       this.lastName = customer.lastName;
+      this.idDevice = customer.idDevice ? customer.idDevice : this.device.uuid;
       this.alreadyRegistered = true;
     }
 
@@ -63,7 +65,14 @@ export class RegisterPage {
       ? this.recaptchaVerifier
       : this.authService.getVerificationCaptcha();
 
-    this.authService.getSmsVerificationCodeNative(parsedPhone);
+    if (this.platform.is("desktop") || this.platform.is("mobileweb")) {
+      this.authService.getSmsVerificationCode(
+        parsedPhone,
+        this.recaptchaVerifier
+      );
+    } else {
+      this.authService.getSmsVerificationCodeNative(parsedPhone);
+    }
   }
 
   checkInputs() {
@@ -89,17 +98,28 @@ export class RegisterPage {
     );
   }
 
-  // TODO: Agregar la variante para poder utilizar esta autenticación desde browser web (chequear plataforma)
-  register() {
-    this.authService.smsAuthNative(
-      {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.phone,
-        idDevice: this.device.uuid
-      },
-      this.authService.verificationId,
-      this.verificationCode
-    );
+  register(alreadyRegistered?: boolean) {
+    const userInfo = {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      email: this.phone,
+      idDevice: this.idDevice
+    };
+
+    if (this.platform.is("desktop") || this.platform.is("mobileweb")) {
+      this.authService.smsAuth(
+        userInfo,
+        this.authService.verificationId,
+        this.verificationCode,
+        alreadyRegistered
+      );
+    } else {
+      this.authService.smsAuthNative(
+        userInfo,
+        this.authService.verificationId,
+        this.verificationCode,
+        alreadyRegistered
+      );
+    }
   }
 }

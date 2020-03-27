@@ -120,7 +120,12 @@ export class AuthService {
     return matches.reduce(reducer);
   }
 
-  async smsAuthNative(userInfo: any, verificationId: string, code: any) {
+  async smsAuthNative(
+    userInfo: any,
+    verificationId: string,
+    code: any,
+    alreadyRegistered: boolean
+  ) {
     this.loadingService.showLoading();
     try {
       const result = await this.firebaseAuthentication.signInWithVerificationId(
@@ -128,11 +133,9 @@ export class AuthService {
         code
       );
 
-      const customer = await this.customerService.logInSqlDatabase(
-        result,
-        "SMS",
-        userInfo
-      );
+      const customer = alreadyRegistered
+        ? await this.customerService.getFromSqlDatabase(result, "SMS", userInfo)
+        : await this.customerService.logInSqlDatabase(result, "SMS", userInfo);
 
       this.customerSubject.next(customer);
       this.loggedWith = "SMS";
@@ -144,7 +147,12 @@ export class AuthService {
     }
   }
 
-  async smsAuth(userInfo: any, verificationId: string, code: string) {
+  async smsAuth(
+    userInfo: any,
+    verificationId: string,
+    code: string,
+    alreadyRegistered: boolean
+  ) {
     this.loadingService.showLoading();
     try {
       const credential = await firebase.auth.PhoneAuthProvider.credential(
@@ -156,11 +164,9 @@ export class AuthService {
         .auth()
         .signInWithCredential(credential);
 
-      const customer = await this.customerService.logInSqlDatabase(
-        result,
-        "SMS",
-        userInfo
-      );
+      const customer = alreadyRegistered
+        ? await this.customerService.getFromSqlDatabase(result, "SMS", userInfo)
+        : await this.customerService.logInSqlDatabase(result, "SMS", userInfo);
 
       this.customerSubject.next(customer);
       this.loggedWith = "SMS";

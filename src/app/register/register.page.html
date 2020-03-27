@@ -62,7 +62,7 @@
   <ion-card color="light" *ngIf="registrationFormVisible">
     <!--  <ion-card color="light" *ngIf="true">-->
     <ion-card-content>
-      <form (ngSubmit)="register()">
+      <form (ngSubmit)="register(alreadyRegistered)">
         <ng-container *ngIf="!alreadyRegistered">
           <ion-item>
             <ion-label><strong>Nombre:</strong></ion-label>

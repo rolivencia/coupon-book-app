@@ -22,6 +22,12 @@ export class CustomerService {
     );
   }
 
+  login(email: string, idDevice: string): Observable<Customer> {
+    return this.http.get<Customer>(
+      `${environment.apiUrl}/customer/login/${email}/${idDevice}`
+    );
+  }
+
   create(customer: Customer): Observable<Customer> {
     return this.http.post<Customer>(
       `${environment.apiUrl}/customer/create`,
@@ -44,6 +50,12 @@ export class CustomerService {
       email: userInfo.email
     };
     const sqlUser = await this.create(customer).toPromise();
+    localStorage.setItem("customer", JSON.stringify(sqlUser));
+    return sqlUser;
+  }
+
+  async getFromSqlDatabase(result, loggedWith: string, userInfo?: any) {
+    const sqlUser = await this.login(userInfo.email, userInfo.idDevice).toPromise();
     localStorage.setItem("customer", JSON.stringify(sqlUser));
     return sqlUser;
   }
