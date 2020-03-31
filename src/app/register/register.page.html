@@ -5,13 +5,14 @@
 ></app-header>
 
 <ion-content>
-<!--  <ion-card color="light">-->
-<!--    <ion-card-content>-->
-<!--      <ion-label-->
-<!--        >{{'Device UUID is: ' + this.device.uuid}}</ion-label-->
-<!--      >-->
-<!--    </ion-card-content>-->
-<!--  </ion-card>-->
+
+  <ion-card *ngIf="!environment.production" color="light">
+    <ion-card-content>
+      <ion-label
+        >{{'Device UUID is: ' + this.idDevice}}</ion-label
+      >
+    </ion-card-content>
+  </ion-card>
   <ion-card color="light">
     <ion-card-content>
       <ion-label
