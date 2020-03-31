@@ -2,7 +2,7 @@
   "name": "brugge-app",
   "version": "0.0.1",
   "engines": {
-    "node": "12.9.1"
+    "node": "^12.9.1"
   },
   "author": "Olivencia C&D",
   "homepage": "https://olivencia.com.ar",
