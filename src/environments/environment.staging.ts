@@ -1,7 +1,7 @@
 export const environment = {
-    name: 'Production',
+    name: 'Staging',
     production: true,
-    apiUrl: 'https://brugge-manager.herokuapp.com',
+    apiUrl: 'https://brugge-manager-staging.herokuapp.com',
     firebaseConfig: {
         apiKey: 'AIzaSyAi2xsjCLF1UDSVzClwoqUWFWqHLeXxuFo',
         authDomain: 'brugge-f8811.firebaseapp.com',

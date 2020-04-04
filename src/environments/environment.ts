@@ -3,9 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
+  name: 'Development',
   production: false,
   apiUrl: 'http://localhost:4000',
-  // apiUrl: 'https://brugge-manager.herokuapp.com',
   firebaseConfig: {
     apiKey: "AIzaSyAi2xsjCLF1UDSVzClwoqUWFWqHLeXxuFo",
     authDomain: "brugge-f8811.firebaseapp.com",
