@@ -88,6 +88,7 @@ export class RegisterPage {
 
     resetPhone() {
         this.registrationFormVisible = false;
+        this.alreadyRegistered = false;
         this.verificationCode = '';
     }
 
