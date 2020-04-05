@@ -27,7 +27,7 @@ export class RegisterPage {
     environment: any;
 
     constructor(
-        private authService: AuthService,
+        public authService: AuthService,
         private customerService: CustomerService,
         private device: Device,
         private navCtrl: NavController,
