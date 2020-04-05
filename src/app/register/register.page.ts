@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '@app/_services/auth.service';
 import { CustomerService } from '@app/_services/customer.service';
 import { ThemeService } from '@app/_services/theme.service';
-import { Platform } from '@ionic/angular';
+import { NavController, Platform } from '@ionic/angular';
 import { Device } from '@ionic-native/device/ngx';
 
 import { environment } from '@environments/environment';
@@ -30,6 +30,7 @@ export class RegisterPage {
         private authService: AuthService,
         private customerService: CustomerService,
         private device: Device,
+        private navCtrl: NavController,
         private platform: Platform,
         public themeService: ThemeService
     ) {
@@ -41,6 +42,13 @@ export class RegisterPage {
     }
 
     ionViewDidEnter() {
+
+        this.authService.loggedIn.subscribe(status => {
+            if (status) {
+                this.navCtrl.navigateForward('/home');
+            }
+        });
+
         this.authService.verificationCodeSent.subscribe(status => {
             this.registrationFormVisible = status;
         });

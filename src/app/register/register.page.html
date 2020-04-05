@@ -6,13 +6,22 @@
 
 <ion-content>
 
-  <ion-card *ngIf="!environment.production" color="light">
+  <ion-card *ngIf="environment.name !== 'Production'" color="light">
     <ion-card-content>
       <ion-label
         >{{'Device UUID is: ' + this.idDevice}}</ion-label
       >
     </ion-card-content>
   </ion-card>
+
+  <ion-card *ngIf="authService.error" color="danger">
+    <ion-card-content>
+      <ion-label
+      >{{authService.error.message}}</ion-label
+      >
+    </ion-card-content>
+  </ion-card>
+
   <ion-card color="light">
     <ion-card-content>
       <ion-label
